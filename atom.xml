@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2020-09-20T14:44:46.525Z</updated>
+    <updated>2020-09-21T09:35:32.603Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -10,6 +10,45 @@
     <logo>https://quenkar.github.io/images/avatar.png</logo>
     <icon>https://quenkar.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, quenkar</rights>
+    <entry>
+        <title type="html"><![CDATA[152/乘积最大子序列]]></title>
+        <id>https://quenkar.github.io/post/152cheng-ji-zui-da-zi-xu-lie/</id>
+        <link href="https://quenkar.github.io/post/152cheng-ji-zui-da-zi-xu-lie/">
+        </link>
+        <updated>2020-09-21T09:30:40.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>题目：</strong><br>
+给你一个整数数组 nums ，请你找出数组中乘积最大的连续子数组（该子数组中至少包含一个数字）。<br>
+示例 1:<br>
+输入: [2,3,-2,4]<br>
+输出: 6<br>
+解释: 子数组 [2,3] 有最大乘积 6。<br>
+示例 2:<br>
+输入: [-2,0,-1]<br>
+输出: 0<br>
+解释: 结果不能为 2, 因为 [-2,-1] 不是子数组。</p>
+<p>从别人那里扒来的神奇解法，主要是要注意负数的情况，当遇到一个负数的时候不能确定后面还有没有负数可以使结果变得更大，需要维护一个最小值来记录。<br>
+这里使用<strong>swap进行交换，因为遇到负数，之前最大的变成最小的，最小的反而变成最大数</strong>。（这也太难想了😪）</p>
+<pre><code class="language-c++">class Solution {
+public:
+    int maxProduct(vector&lt;int&gt;&amp; nums) {
+        int imax=1,imin=1,ans=INT_MIN;
+
+        for(int i:nums)
+        {
+            if(i&lt;0)
+                swap(imin,imax);
+
+            imax=max(imax*i,i);
+            imin=min(imin*i,i);
+        
+            ans=max(ans,imax);
+        }
+        return ans;
+    }
+};
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[128/最长连续序列]]></title>
         <id>https://quenkar.github.io/post/128zui-chang-lian-xu-xu-lie/</id>

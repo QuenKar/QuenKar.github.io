@@ -2,22 +2,24 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | quenkar</title>
+<title>152/乘积最大子序列 | quenkar</title>
 <link rel="shortcut icon" href="https://quenkar.github.io/favicon.ico?v=1600680929447">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://quenkar.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="152/乘积最大子序列 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="
-欢迎来到我的小站呀
-nice to meet you ! ! !
-
-🏳️‍🌈正在读大学，励志成为c++后台开发的小菜鸡🙃。
-" />
-    <meta name="keywords" content="" />
+    <meta name="description" content="题目：
+给你一个整数数组 nums ，请你找出数组中乘积最大的连续子数组（该子数组中至少包含一个数字）。
+示例 1:
+输入: [2,3,-2,4]
+输出: 6
+解释: 子数组 [2,3] 有最大乘积 6。
+示例 2:
+输入: [-2,0,-..." />
+    <meta name="keywords" content="array,leetcode" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -79,25 +81,59 @@ nice to meet you ! ! !
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              152/乘积最大子序列
             </h2>
             <div class="post-info">
               <span>
-                2019-01-25
+                2020-09-21
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
+              
+                <a href="https://quenkar.github.io/tag/RHD8M90nu/" class="post-tag">
+                  # array
+                </a>
+              
+                <a href="https://quenkar.github.io/tag/BC76y0qv1/" class="post-tag">
+                  # leetcode
+                </a>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <blockquote>
-<p>欢迎来到我的小站呀<br>
-nice to meet you ! ! !</p>
-</blockquote>
-<p>🏳️‍🌈正在读大学，励志成为c++后台开发的小菜鸡🙃。</p>
+                <p><strong>题目：</strong><br>
+给你一个整数数组 nums ，请你找出数组中乘积最大的连续子数组（该子数组中至少包含一个数字）。<br>
+示例 1:<br>
+输入: [2,3,-2,4]<br>
+输出: 6<br>
+解释: 子数组 [2,3] 有最大乘积 6。<br>
+示例 2:<br>
+输入: [-2,0,-1]<br>
+输出: 0<br>
+解释: 结果不能为 2, 因为 [-2,-1] 不是子数组。</p>
+<p>从别人那里扒来的神奇解法，主要是要注意负数的情况，当遇到一个负数的时候不能确定后面还有没有负数可以使结果变得更大，需要维护一个最小值来记录。<br>
+这里使用<strong>swap进行交换，因为遇到负数，之前最大的变成最小的，最小的反而变成最大数</strong>。（这也太难想了😪）</p>
+<pre><code class="language-c++">class Solution {
+public:
+    int maxProduct(vector&lt;int&gt;&amp; nums) {
+        int imax=1,imin=1,ans=INT_MIN;
+
+        for(int i:nums)
+        {
+            if(i&lt;0)
+                swap(imin,imax);
+
+            imax=max(imax*i,i);
+            imin=min(imin*i,i);
+        
+            ans=max(ans,imax);
+        }
+        return ans;
+    }
+};
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -107,6 +143,15 @@ nice to meet you ! ! !</p>
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://quenkar.github.io/post/128zui-chang-lian-xu-xu-lie/">
+              <h3 class="post-title">
+                128/最长连续序列
+              </h3>
+            </a>
+          </div>
         
 
         
