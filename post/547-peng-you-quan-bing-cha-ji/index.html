@@ -2,24 +2,18 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>128/最长连续序列 | quenkar</title>
+<title>547. 朋友圈/并查集 | quenkar</title>
 <link rel="shortcut icon" href="https://quenkar.github.io/favicon.ico?v=1600939301805">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://quenkar.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="128/最长连续序列 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="547. 朋友圈/并查集 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="题目：
-给定一个未排序的整数数组，找出最长连续序列的长度。
-要求算法的时间复杂度为 O(n)。
-示例:
-输入: [100, 4, 200, 1, 3, 2]
-输出: 4
-解释: 最长连续序列是 [1, 2, 3, 4]。
-它的长度为 4。
-..." />
+    <meta name="description" content="题目
+班上有 N 名学生。其中有些人是朋友，有些则不是。他们的友谊具有是传递性。如果已知 A 是 B 的朋友，B 是 C 的朋友，那么我们可以认为 A 也是 C 的朋友。所谓的朋友圈，是指所有朋友的集合。
+给定一个 N * N 的矩阵 M，..." />
     <meta name="keywords" content="leetcode" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -82,11 +76,11 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              128/最长连续序列
+              547. 朋友圈/并查集
             </h2>
             <div class="post-info">
               <span>
-                2020-09-20
+                2020-09-24
               </span>
               <span>
                 2 min read
@@ -98,77 +92,90 @@
               
             </div>
             
-              <img class="post-feature-image" src="https://quenkar.github.io/post-images/128zui-chang-lian-xu-xu-lie.png" alt="">
+              <img class="post-feature-image" src="https://quenkar.github.io/post-images/547-peng-you-quan-bing-cha-ji.jpg" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p><strong>题目：</strong><br>
-给定一个未排序的整数数组，找出最长连续序列的长度。<br>
-要求算法的时间复杂度为 O(n)。<br>
-示例:<br>
-输入: [100, 4, 200, 1, 3, 2]<br>
-输出: 4<br>
-解释: 最长连续序列是 [1, 2, 3, 4]。<br>
-它的长度为 4。<br>
-<strong>方法一：哈希表</strong></p>
+                <h1 id="题目">题目</h1>
+<p>班上有 N 名学生。其中有些人是朋友，有些则不是。他们的友谊具有是传递性。如果已知 A 是 B 的朋友，B 是 C 的朋友，那么我们可以认为 A 也是 C 的朋友。所谓的朋友圈，是指所有朋友的集合。</p>
+<p>给定一个 N * N 的矩阵 M，表示班级中学生之间的朋友关系。如果M[i][j] = 1，表示已知第 i 个和 j 个学生互为朋友关系，否则为不知道。你必须输出所有学生中的已知的朋友圈总数。</p>
+<p>示例 1：<br>
+输入：<br>
+[[1,1,0],<br>
+[1,1,0],<br>
+[0,0,1]]<br>
+输出：2<br>
+解释：已知学生 0 和学生 1 互为朋友，他们在一个朋友圈。<br>
+第2个学生自己在一个朋友圈。所以返回 2 。</p>
+<p>示例 2：<br>
+输入：<br>
+[[1,1,0],<br>
+[1,1,1],<br>
+[0,1,1]]<br>
+输出：1<br>
+解释：已知学生 0 和学生 1 互为朋友，学生 1 和学生 2 互为朋友，所以学生 0 和学生 2 也是朋友，所以他们三个在一个朋友圈，返回 1 。<br>
+ <br>
+提示：<br>
+1 &lt;= N &lt;= 200<br>
+M[i][i] == 1<br>
+M[i][j] == M[j][i]</p>
+<h1 id="题解">题解</h1>
 <pre><code class="language-c++">class Solution {
 public:
-    int longestConsecutive(vector&lt;int&gt;&amp; nums) {
-        unordered_set&lt;int&gt; st;
-
-        for(int i:nums)st.insert(i);
-        int ans=0;
-        for(int i:st)
-        {
-            if(i!=INT_MIN&amp;&amp;st.count(i-1))
-                continue;
-            
-            int cnt=1;
-            while(i!=INT_MIN&amp;&amp;st.count(i+1))
-            {
-                cnt++;i++;
-            }
-            ans=max(ans,cnt);
-        }
-        return ans;
+    int find(vector&lt;int&gt; &amp;Vec,int n){
+        if(Vec[n]==-1)
+            return n;
+        return find(Vec,Vec[n]);
+    }
+    //将m节点连接到n上
+    void Union(vector&lt;int&gt; &amp;Vec,int m,int n){
+        int parent_m=find(Vec,m);
+        int parent_n=find(Vec,n);
+        if(parent_m!=parent_n)
+            Vec[parent_m]=parent_n;
     }
 
-};
-</code></pre>
-<p><strong>方法二：排序+遍历</strong></p>
-<pre><code class="language-c++">class Solution {
-public:
-    int longestConsecutive(vector&lt;int&gt;&amp; nums) {
-        int m=nums.size();
-        if(m==0)return 0;
-
-        sort(nums.begin(),nums.end());
-
-        vector&lt;int&gt; dp(nums.size(),1);
-        int mlong=1;
-        for(int i=1;i&lt;nums.size();i++)
+    int findCircleNum(vector&lt;vector&lt;int&gt;&gt;&amp; M) {
+        int n=M.size();
+        int res=0;
+        vector&lt;int&gt; union_set(n,-1);
+        for(int i=0;i&lt;n;i++)
         {
-            if(nums[i]==nums[i-1]+1)
+            for(int j=0;j&lt;i;j++)
             {
-                dp[i]+=dp[i-1];
-                mlong=max(dp[i],mlong);
+                if(M[i][j]==1)
+                Union(union_set,j,i);
             }
-            else if(nums[i]==nums[i-1])
-                dp[i]=dp[i-1];
         }
-        return mlong;
+        for(int i=0;i&lt;n;i++)
+            if(union_set[i]==-1)
+                res++;
+        return res;
     }
 };
 </code></pre>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li><a href="#%E9%A2%98%E7%9B%AE">题目</a></li>
+<li><a href="#%E9%A2%98%E8%A7%A3">题解</a></li>
+</ul>
+
               </div>
             </div>
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://quenkar.github.io/post/stl-chang-jian-insertxiang-jie/">
+              <h3 class="post-title">
+                STL 常见insert()详解
+              </h3>
+            </a>
+          </div>
         
 
         

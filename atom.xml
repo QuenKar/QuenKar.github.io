@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2020-09-24T09:18:09.430Z</updated>
+    <updated>2020-09-24T09:21:47.747Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -10,6 +10,72 @@
     <logo>https://quenkar.github.io/images/avatar.png</logo>
     <icon>https://quenkar.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, quenkar</rights>
+    <entry>
+        <title type="html"><![CDATA[547. 朋友圈/并查集]]></title>
+        <id>https://quenkar.github.io/post/547-peng-you-quan-bing-cha-ji/</id>
+        <link href="https://quenkar.github.io/post/547-peng-you-quan-bing-cha-ji/">
+        </link>
+        <updated>2020-09-24T09:18:29.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="题目">题目</h1>
+<p>班上有 N 名学生。其中有些人是朋友，有些则不是。他们的友谊具有是传递性。如果已知 A 是 B 的朋友，B 是 C 的朋友，那么我们可以认为 A 也是 C 的朋友。所谓的朋友圈，是指所有朋友的集合。</p>
+<p>给定一个 N * N 的矩阵 M，表示班级中学生之间的朋友关系。如果M[i][j] = 1，表示已知第 i 个和 j 个学生互为朋友关系，否则为不知道。你必须输出所有学生中的已知的朋友圈总数。</p>
+<p>示例 1：<br>
+输入：<br>
+[[1,1,0],<br>
+[1,1,0],<br>
+[0,0,1]]<br>
+输出：2<br>
+解释：已知学生 0 和学生 1 互为朋友，他们在一个朋友圈。<br>
+第2个学生自己在一个朋友圈。所以返回 2 。</p>
+<p>示例 2：<br>
+输入：<br>
+[[1,1,0],<br>
+[1,1,1],<br>
+[0,1,1]]<br>
+输出：1<br>
+解释：已知学生 0 和学生 1 互为朋友，学生 1 和学生 2 互为朋友，所以学生 0 和学生 2 也是朋友，所以他们三个在一个朋友圈，返回 1 。<br>
+ <br>
+提示：<br>
+1 &lt;= N &lt;= 200<br>
+M[i][i] == 1<br>
+M[i][j] == M[j][i]</p>
+<h1 id="题解">题解</h1>
+<pre><code class="language-c++">class Solution {
+public:
+    int find(vector&lt;int&gt; &amp;Vec,int n){
+        if(Vec[n]==-1)
+            return n;
+        return find(Vec,Vec[n]);
+    }
+    //将m节点连接到n上
+    void Union(vector&lt;int&gt; &amp;Vec,int m,int n){
+        int parent_m=find(Vec,m);
+        int parent_n=find(Vec,n);
+        if(parent_m!=parent_n)
+            Vec[parent_m]=parent_n;
+    }
+
+    int findCircleNum(vector&lt;vector&lt;int&gt;&gt;&amp; M) {
+        int n=M.size();
+        int res=0;
+        vector&lt;int&gt; union_set(n,-1);
+        for(int i=0;i&lt;n;i++)
+        {
+            for(int j=0;j&lt;i;j++)
+            {
+                if(M[i][j]==1)
+                Union(union_set,j,i);
+            }
+        }
+        for(int i=0;i&lt;n;i++)
+            if(union_set[i]==-1)
+                res++;
+        return res;
+    }
+};
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[STL 常见insert()详解]]></title>
         <id>https://quenkar.github.io/post/stl-chang-jian-insertxiang-jie/</id>
