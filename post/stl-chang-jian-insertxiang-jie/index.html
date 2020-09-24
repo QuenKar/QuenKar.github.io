@@ -1,0 +1,230 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>STL 常见insert()详解 | quenkar</title>
+<link rel="shortcut icon" href="https://quenkar.github.io/favicon.ico?v=1600939086641">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://quenkar.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="STL 常见insert()详解 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="map与set的insert操作
+std::pair&lt;iterator,bool&gt; insert( const value_type&amp; value );
+template&lt; class P &gt;
+std::pa..." />
+    <meta name="keywords" content="STL" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://quenkar.github.io">
+  <img class="avatar" src="https://quenkar.github.io/images/avatar.png?v=1600939086641" alt="">
+  </a>
+  <h1 class="site-title">
+    quenkar
+  </h1>
+  <p class="site-description">
+    我已经决定吃喜欢的东西，过短命的人生了
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              STL 常见insert()详解
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-09-24
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+                <a href="https://quenkar.github.io/tag/hVghwToO8/" class="post-tag">
+                  # STL
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="map与set的insert操作">map与set的insert操作</h1>
+<p><code>std::pair&lt;iterator,bool&gt; insert( const value_type&amp; value );</code></p>
+<pre><code>template&lt; class P &gt;
+std::pair&lt;iterator,bool&gt; insert( P&amp;&amp; value );
+</code></pre>
+<p>(C++11 起)<br>
+主要注意一个返回值是由被插入元素（或阻止插入元素）的迭代器和一个bool值（插入成功为true失败则为false）。</p>
+<h1 id="list的insert操作">list的insert操作</h1>
+<p>在pos前插入1个value元素：<br>
+<code>iterator insert( iterator pos, const T&amp; value );</code><br>
+(C++11 前)<br>
+<code>iterator insert( const_iterator pos, const T&amp; value );</code><br>
+(C++11 起)<br>
+在pos前插入count个value元素：<br>
+<code>void insert( iterator pos, size_type count, const T&amp; value );</code><br>
+(C++11 前)<br>
+<code>iterator insert( const_iterator pos, size_type count, const T&amp; value );</code><br>
+(C++11 起)</p>
+<h1 id="vector的insert操作">vector的insert操作</h1>
+<p>同list差不多<br>
+<code>iterator insert( iterator pos, const T&amp; value );</code><br>
+(C++11 前)<br>
+<code>iterator insert( const_iterator pos, const T&amp; value );</code><br>
+(C++11 起)<br>
+<code>void insert( iterator pos, size_type count, const T&amp; value );</code><br>
+(C++11 前)<br>
+<code>iterator insert( const_iterator pos, size_type count, const T&amp; value );</code><br>
+(C++11 起)</p>
+<h1 id="deque的insert操作">deque的insert操作</h1>
+<p><code>iterator insert( iterator pos, const T&amp; value );</code><br>
+(C++11 前)</p>
+<p><code>iterator insert( const_iterator pos, const T&amp; value );</code><br>
+(C++11 起)</p>
+<p><code>void insert( iterator pos, size_type count, const T&amp; value );</code><br>
+(C++11 前)</p>
+<p><code>iterator insert( const_iterator pos, size_type count, const T&amp; value );</code><br>
+(C++11 起)</p>
+<h1 id="string的insert操作">string的insert操作</h1>
+<ol>
+<li>在位置 index 插入 count 个字符 ch 的副本。<br>
+<code>basic_string&amp; insert( size_type index, size_type count, CharT ch );</code></li>
+<li>在位置 index 插入 s 所指向的空终止字符串。字符串的长度由首个空字符，用 Traits::length(s) 确定。<br>
+<code>basic_string&amp; insert( size_type index, const CharT* s );</code></li>
+<li>在位置 index 插入范围 [s, s+count) 中的字符。范围能含有空字符。<br>
+<code>basic_string&amp; insert( size_type index, const CharT* s, size_type count );</code></li>
+<li>在位置 index 插入 string str 。<br>
+<code>basic_string&amp; insert( size_type index, const basic_string&amp; str );</code></li>
+<li>在 pos 所指向的字符前插入字符 ch 。<br>
+<code>iterator insert( iterator pos, CharT ch );</code></li>
+<li>在 pos 所指向的元素（若存在）前插入 count 个字符 ch 的副本。<br>
+<code>insert( iterator pos, size_type count, CharT ch );</code></li>
+</ol>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#map%E4%B8%8Eset%E7%9A%84insert%E6%93%8D%E4%BD%9C">map与set的insert操作</a></li>
+<li><a href="#list%E7%9A%84insert%E6%93%8D%E4%BD%9C">list的insert操作</a></li>
+<li><a href="#vector%E7%9A%84insert%E6%93%8D%E4%BD%9C">vector的insert操作</a></li>
+<li><a href="#deque%E7%9A%84insert%E6%93%8D%E4%BD%9C">deque的insert操作</a></li>
+<li><a href="#string%E7%9A%84insert%E6%93%8D%E4%BD%9C">string的insert操作</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://quenkar.github.io/post/zshoh-my-zsh-pei-zhi/">
+              <h3 class="post-title">
+                ZSH+oh-my-zsh配置
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  <div>Powered by <a href="https://github.com/QuenKar" target="_blank">  Quenkar</a></div>
+  <a class="rss" href="https://quenkar.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

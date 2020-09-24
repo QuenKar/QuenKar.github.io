@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2020-09-24T00:06:59.101Z</updated>
+    <updated>2020-09-24T09:18:09.430Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -10,6 +10,91 @@
     <logo>https://quenkar.github.io/images/avatar.png</logo>
     <icon>https://quenkar.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, quenkar</rights>
+    <entry>
+        <title type="html"><![CDATA[STL 常见insert()详解]]></title>
+        <id>https://quenkar.github.io/post/stl-chang-jian-insertxiang-jie/</id>
+        <link href="https://quenkar.github.io/post/stl-chang-jian-insertxiang-jie/">
+        </link>
+        <updated>2020-09-24T09:14:31.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="map与set的insert操作">map与set的insert操作</h1>
+<p><code>std::pair&lt;iterator,bool&gt; insert( const value_type&amp; value );</code></p>
+<pre><code>template&lt; class P &gt;
+std::pair&lt;iterator,bool&gt; insert( P&amp;&amp; value );
+</code></pre>
+<p>(C++11 起)<br>
+主要注意一个返回值是由被插入元素（或阻止插入元素）的迭代器和一个bool值（插入成功为true失败则为false）。</p>
+<h1 id="list的insert操作">list的insert操作</h1>
+<p>在pos前插入1个value元素：<br>
+<code>iterator insert( iterator pos, const T&amp; value );</code><br>
+(C++11 前)<br>
+<code>iterator insert( const_iterator pos, const T&amp; value );</code><br>
+(C++11 起)<br>
+在pos前插入count个value元素：<br>
+<code>void insert( iterator pos, size_type count, const T&amp; value );</code><br>
+(C++11 前)<br>
+<code>iterator insert( const_iterator pos, size_type count, const T&amp; value );</code><br>
+(C++11 起)</p>
+<h1 id="vector的insert操作">vector的insert操作</h1>
+<p>同list差不多<br>
+<code>iterator insert( iterator pos, const T&amp; value );</code><br>
+(C++11 前)<br>
+<code>iterator insert( const_iterator pos, const T&amp; value );</code><br>
+(C++11 起)<br>
+<code>void insert( iterator pos, size_type count, const T&amp; value );</code><br>
+(C++11 前)<br>
+<code>iterator insert( const_iterator pos, size_type count, const T&amp; value );</code><br>
+(C++11 起)</p>
+<h1 id="deque的insert操作">deque的insert操作</h1>
+<p><code>iterator insert( iterator pos, const T&amp; value );</code><br>
+(C++11 前)</p>
+<p><code>iterator insert( const_iterator pos, const T&amp; value );</code><br>
+(C++11 起)</p>
+<p><code>void insert( iterator pos, size_type count, const T&amp; value );</code><br>
+(C++11 前)</p>
+<p><code>iterator insert( const_iterator pos, size_type count, const T&amp; value );</code><br>
+(C++11 起)</p>
+<h1 id="string的insert操作">string的insert操作</h1>
+<ol>
+<li>在位置 index 插入 count 个字符 ch 的副本。<br>
+<code>basic_string&amp; insert( size_type index, size_type count, CharT ch );</code></li>
+<li>在位置 index 插入 s 所指向的空终止字符串。字符串的长度由首个空字符，用 Traits::length(s) 确定。<br>
+<code>basic_string&amp; insert( size_type index, const CharT* s );</code></li>
+<li>在位置 index 插入范围 [s, s+count) 中的字符。范围能含有空字符。<br>
+<code>basic_string&amp; insert( size_type index, const CharT* s, size_type count );</code></li>
+<li>在位置 index 插入 string str 。<br>
+<code>basic_string&amp; insert( size_type index, const basic_string&amp; str );</code></li>
+<li>在 pos 所指向的字符前插入字符 ch 。<br>
+<code>iterator insert( iterator pos, CharT ch );</code></li>
+<li>在 pos 所指向的元素（若存在）前插入 count 个字符 ch 的副本。<br>
+<code>insert( iterator pos, size_type count, CharT ch );</code></li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[ZSH+oh-my-zsh配置]]></title>
+        <id>https://quenkar.github.io/post/zshoh-my-zsh-pei-zhi/</id>
+        <link href="https://quenkar.github.io/post/zshoh-my-zsh-pei-zhi/">
+        </link>
+        <updated>2020-09-24T09:11:50.000Z</updated>
+        <content type="html"><![CDATA[<p>环境：deepin（Ubuntu也通用）<br>
+1.安装zsh<br>
+<code>sudo apt-get install zsh</code><br>
+2.切换bash为zsh<br>
+<code>chsh -s /bin/zsh</code><br>
+如果要切回bash就：<br>
+<code>chsh -s /bin/bash</code><br>
+3.安装oh-my-zsh<br>
+从GitHub上面拉取下来，放在~/.oh-my-zsh目录下<br>
+<code>git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh</code><br>
+备份已有的zshrc, 替换zshrc<br>
+<code>cp ~/.zshrc ~/.zshrc.orig</code><br>
+<code>cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</code><br>
+配置主题：<br>
+<code>vim ~/.zshrc</code><br>
+推荐ys这个主题：<br>
+<code>ZSH_THEME=&quot;ys&quot;</code></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[152/乘积最大子序列]]></title>
         <id>https://quenkar.github.io/post/152cheng-ji-zui-da-zi-xu-lie/</id>
