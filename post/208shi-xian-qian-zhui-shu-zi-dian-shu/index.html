@@ -2,24 +2,22 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ZSH+oh-my-zsh配置 | quenkar</title>
+<title>208/实现前缀树（字典树） | quenkar</title>
 <link rel="shortcut icon" href="https://quenkar.github.io/favicon.ico?v=1601014545751">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://quenkar.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="ZSH+oh-my-zsh配置 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="208/实现前缀树（字典树） | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="环境：deepin（Ubuntu也通用）
-1.安装zsh
-sudo apt-get install zsh
-2.切换bash为zsh
-chsh -s /bin/zsh
-如果要切回bash就：
-chsh -s /bin/bash
-3.安装oh..." />
-    <meta name="keywords" content="环境配置" />
+    <meta name="description" content="题目
+实现一个 Trie (前缀树)，包含 insert, search, 和 startsWith 这三个操作。
+示例:
+Trie trie = new Trie();
+trie.insert(&quot;apple&quot;); 
+t..." />
+    <meta name="keywords" content="leetcode" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -81,47 +79,86 @@ chsh -s /bin/bash
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              ZSH+oh-my-zsh配置
+              208/实现前缀树（字典树）
             </h2>
             <div class="post-info">
               <span>
-                2020-09-24
+                2020-09-25
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
-                <a href="https://quenkar.github.io/tag/C_ReWnoEK/" class="post-tag">
-                  # 环境配置
+                <a href="https://quenkar.github.io/tag/BC76y0qv1/" class="post-tag">
+                  # leetcode
                 </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://quenkar.github.io/post-images/zshoh-my-zsh-pei-zhi.png" alt="">
+              <img class="post-feature-image" src="https://quenkar.github.io/post-images/208shi-xian-qian-zhui-shu-zi-dian-shu.png" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>环境：deepin（Ubuntu也通用）<br>
-1.安装zsh<br>
-<code>sudo apt-get install zsh</code><br>
-2.切换bash为zsh<br>
-<code>chsh -s /bin/zsh</code><br>
-如果要切回bash就：<br>
-<code>chsh -s /bin/bash</code><br>
-3.安装oh-my-zsh<br>
-从GitHub上面拉取下来，放在~/.oh-my-zsh目录下<br>
-<code>git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh</code><br>
-备份已有的zshrc, 替换zshrc<br>
-<code>cp ~/.zshrc ~/.zshrc.orig</code><br>
-<code>cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</code><br>
-配置主题：<br>
-<code>vim ~/.zshrc</code><br>
-推荐ys这个主题：<br>
-<code>ZSH_THEME=&quot;ys&quot;</code></p>
+                <h1 id="题目">题目</h1>
+<p>实现一个 Trie (前缀树)，包含 insert, search, 和 startsWith 这三个操作。<br>
+示例:</p>
+<pre><code class="language-c++">Trie trie = new Trie();
+trie.insert(&quot;apple&quot;); 
+trie.search(&quot;apple&quot;); // 返回 true 
+trie.search(&quot;app&quot;); // 返回 false
+trie.startsWith(&quot;app&quot;); // 返回 true 
+trie.insert(&quot;app&quot;);
+trie.search(&quot;app&quot;);// 返回 true 
+</code></pre>
+<p>说明:你可以假设所有的输入都是由小写字母 a-z 构成的。 保证所有输入均为非空字符串。</p>
+<pre><code class="language-c++">class Trie
+{
+private:
+	bool is_string = false;
+	Trie* next[26] = { nullptr };
+public:
+	Trie()
+    {
+    }
+
+	void insert(const string&amp; word)//插入单词
+	{
+		Trie* root = this;
+		for (const auto&amp; w : word) {
+			if (root-&gt;next[w - 'a'] == nullptr)root-&gt;next[w - 'a'] = new Trie();
+			root = root-&gt;next[w - 'a'];
+		}
+		root-&gt;is_string = true;
+	}
+
+	bool search(const string&amp; word)//查找单词
+	{
+		Trie* root = this;
+		for (const auto&amp; w : word) {
+			if (root-&gt;next[w - 'a'] == nullptr)return false;
+			root = root-&gt;next[w - 'a'];
+		}
+		return root-&gt;is_string;
+	}
+
+	bool startsWith(const string&amp; prefix)//查找前缀
+	{
+		Trie* root = this;
+		for (const auto&amp; p : prefix) {
+			if (root-&gt;next[p - 'a'] == nullptr)return false;
+			root = root-&gt;next[p - 'a'];
+		}
+		return true;
+	}
+};
+</code></pre>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li><a href="#%E9%A2%98%E7%9B%AE">题目</a></li>
+</ul>
+
               </div>
             </div>
           </article>
@@ -130,9 +167,9 @@ chsh -s /bin/bash
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://quenkar.github.io/post/152cheng-ji-zui-da-zi-xu-lie/">
+            <a href="https://quenkar.github.io/post/547-peng-you-quan-bing-cha-ji/">
               <h3 class="post-title">
-                152/乘积最大子序列
+                547. 朋友圈/并查集
               </h3>
             </a>
           </div>
