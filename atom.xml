@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2020-09-25T06:15:50.187Z</updated>
+    <updated>2020-09-27T12:19:10.069Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -10,6 +10,38 @@
     <logo>https://quenkar.github.io/images/avatar.png</logo>
     <icon>https://quenkar.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, quenkar</rights>
+    <entry>
+        <title type="html"><![CDATA[IDEA推荐插件及相关配置]]></title>
+        <id>https://quenkar.github.io/post/idea-tui-jian-cha-jian-ji-xiang-guan-pei-zhi/</id>
+        <link href="https://quenkar.github.io/post/idea-tui-jian-cha-jian-ji-xiang-guan-pei-zhi/">
+        </link>
+        <updated>2020-09-27T12:10:39.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="material-theme-ui">Material Theme UI</h3>
+<h3 id="atom-material-icons">Atom Material Icons</h3>
+<p>皮肤插件，还是十分好看的，直接上图</p>
+<figure data-type="image" tabindex="1"><img src="https://quenkar.github.io/post-images/1601208831704.png" alt="" loading="lazy"></figure>
+<h3 id="codeglance">CodeGlance</h3>
+<p>类似与vscode的侧边栏，代码缩略滚动，还可以直接显示鼠标停留的那段代码<br>
+<img src="https://quenkar.github.io/post-images/1601208817674.png" alt="" loading="lazy"></p>
+<h3 id="codota">Codota</h3>
+<p>可以直接在IDEA中查询某个类以及相关方法的使用，给出的例子也都不错。</p>
+<p><strong>Ctrl+Shift+y</strong>显示查询框<br>
+<img src="https://quenkar.github.io/post-images/1601209107527.png" alt="" loading="lazy"></p>
+<p>以String类举例：</p>
+<figure data-type="image" tabindex="2"><img src="https://quenkar.github.io/post-images/1601209111494.png" alt="" loading="lazy"></figure>
+<h3 id="ide-features-trainer">IDE Features Trainer</h3>
+<p>推荐学习IDEA使用教程，主要是快捷键方面的使用。假如之前没用过还是值得学一下，可以提高编程效率哦。</p>
+<p>（英文教程，需要一些英语知识哦）<br>
+<img src="https://quenkar.github.io/post-images/1601209098876.png" alt="" loading="lazy"></p>
+<h3 id="key-promoter-x">Key Promoter X</h3>
+<p>IDEA快捷键记录，会提示相关功能的快捷键提示，还会显示个人常用的快捷键，有时候忘记了一些快捷键的使用，可以直接去翻翻。</p>
+<figure data-type="image" tabindex="3"><img src="https://quenkar.github.io/post-images/1601209128617.png" alt="" loading="lazy"></figure>
+<h3 id="rainbow-brackets">Rainbow Brackets</h3>
+<p>嵌套括号彩色显示，可以更好的区分代码块<br>
+<img src="https://quenkar.github.io/post-images/1601209134103.png" alt="" loading="lazy"></p>
+<p>以上就是我使用的一些插件，over</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[208/实现前缀树（字典树）]]></title>
         <id>https://quenkar.github.io/post/208shi-xian-qian-zhui-shu-zi-dian-shu/</id>
