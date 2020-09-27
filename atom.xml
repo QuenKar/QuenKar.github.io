@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2020-09-27T12:25:03.364Z</updated>
+    <updated>2020-09-27T12:27:26.052Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -33,7 +33,7 @@
 <figure data-type="image" tabindex="1"><img src="https://quenkar.github.io/post-images/1601209111494.png" alt="" loading="lazy"></figure>
 <h3 id="ide-features-trainer">IDE Features Trainer</h3>
 <p>推荐学习IDEA使用教程，主要是快捷键方面的使用。假如之前没用过还是值得学一下，可以提高编程效率哦。</p>
-<p>（英文教程，需要一些英语知识哦）<br>
+<p>（英文教程，需要一些英语知识哦😄）<br>
 <img src="https://quenkar.github.io/post-images/1601209098876.png" alt="" loading="lazy"></p>
 <h3 id="key-promoter-x">Key Promoter X</h3>
 <p>IDEA快捷键记录，会提示相关功能的快捷键提示，还会显示个人常用的快捷键，有时候忘记了一些快捷键的使用，可以直接去翻翻。</p>
