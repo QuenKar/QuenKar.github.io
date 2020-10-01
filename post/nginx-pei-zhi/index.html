@@ -2,23 +2,23 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | quenkar</title>
+<title>Nginx配置 | quenkar</title>
 <link rel="shortcut icon" href="https://quenkar.github.io/favicon.ico?v=1601560542597">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://quenkar.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Nginx配置 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="
-欢迎来到我的小站呀
-nice to meet you ! ! !
-
-之前quenkar.top的站点服务器到期了，忘记续费了，索性直接迁移到GitHub了（可能速度会有点慢？）
-🏳️‍🌈读大学ing，励志成为软件工程师的小菜鸡🙃。
-..." />
-    <meta name="keywords" content="" />
+    <meta name="description" content="环境：Ubuntu 18.04
+权限：root
+1.安装pcre-8.37.tar.gz
+https://ftp.pcre.org/pub/pcre/
+解压 tar -xvf pcre-8.37.tar.gz
+进入pcre-8.37执行
+...." />
+    <meta name="keywords" content="Nginx" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -80,37 +80,93 @@ nice to meet you ! ! !
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              Nginx配置
             </h2>
             <div class="post-info">
               <span>
-                2020-09-06
+                2020-10-01
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
+              
+                <a href="https://quenkar.github.io/tag/-Kr8R0Szj/" class="post-tag">
+                  # Nginx
+                </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://quenkar.github.io/post-images/about.jpg" alt="">
+              <img class="post-feature-image" src="https://quenkar.github.io/post-images/nginx-pei-zhi.png" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <blockquote>
-<p>欢迎来到我的小站呀<br>
-nice to meet you ! ! !</p>
-</blockquote>
-<p>之前quenkar.top的站点服务器到期了，忘记续费了，索性直接迁移到GitHub了（可能速度会有点慢？）</p>
-<p>🏳️‍🌈读大学ing，励志成为软件工程师的小菜鸡🙃。</p>
+                <p><strong>环境：Ubuntu 18.04</strong></p>
+<p><strong>权限：root</strong></p>
+<h3 id="1安装pcre-837targz">1.安装pcre-8.37.tar.gz</h3>
+<p><a href="https://ftp.pcre.org/pub/pcre/">https://ftp.pcre.org/pub/pcre/</a></p>
+<p>解压 <code>tar -xvf pcre-8.37.tar.gz</code></p>
+<p>进入pcre-8.37执行</p>
+<p><code>./configure</code></p>
+<p>然后再执行</p>
+<p><code>make &amp;&amp; make install</code></p>
+<p><strong>至少要在sudo权限下执行，否则就会Permission denied</strong><br>
+<img src="https://quenkar.github.io/post-images/1601560193664.png" alt="" loading="lazy"></p>
+<p>执行<code>pcre-config --version</code>查看版本</p>
+<pre><code class="language-bash">$ pcre-config --version
+8.39
+</code></pre>
+<h3 id="2安装nginx">2.安装Nginx</h3>
+<p>前置条件安装</p>
+<pre><code class="language-bash">sudo apt-get install zlib1g
+
+sudo apt-get install zlib1g.dev
+
+sudo apt-get install openssl
+
+sudo apt-get install libssl-dev
+</code></pre>
+<p>官网下载nginx</p>
+<p>http://nginx.org/en/download.html</p>
+<p>以nginx-1.12.2版本演示<a href="http://nginx.org/download/nginx-1.12.2.tar.gz"> nginx-1.12.2</a></p>
+<p>解压<code>tar -xvf nginx-1.12.2.tar.gz</code></p>
+<p>进入解压后的目录，执行<code>./configure</code></p>
+<p>权限要为<strong>root</strong>，用sudo执行照样权限不够</p>
+<figure data-type="image" tabindex="1"><img src="https://quenkar.github.io/post-images/1601560218025.png" alt="" loading="lazy"></figure>
+<p><strong>root权限</strong>下再执行<code>make &amp;&amp; make install</code></p>
+<p>进入 <code>/usr/local/nginx/sbin</code> 执行<code>sudo ./nginx</code>启动nginx</p>
+<p>到这里就算安装完成了</p>
+<p>再配置一下系统防火墙，设置一下对外的端口号就可以访问了😋</p>
+<figure data-type="image" tabindex="2"><img src="https://quenkar.github.io/post-images/1601560229643.png" alt="" loading="lazy"></figure>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#1%E5%AE%89%E8%A3%85pcre-837targz">1.安装pcre-8.37.tar.gz</a></li>
+<li><a href="#2%E5%AE%89%E8%A3%85nginx">2.安装Nginx</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://quenkar.github.io/post/idea-tui-jian-cha-jian-ji-xiang-guan-pei-zhi/">
+              <h3 class="post-title">
+                IDEA推荐插件及相关配置
+              </h3>
+            </a>
+          </div>
         
 
         
