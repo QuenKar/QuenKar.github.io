@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2020-10-01T14:08:52.847Z</updated>
+    <updated>2020-10-01T14:12:28.639Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -11,7 +11,7 @@
     <icon>https://quenkar.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, quenkar</rights>
     <entry>
-        <title type="html"><![CDATA[Nginx配置]]></title>
+        <title type="html"><![CDATA[Nginx安装]]></title>
         <id>https://quenkar.github.io/post/nginx-pei-zhi/</id>
         <link href="https://quenkar.github.io/post/nginx-pei-zhi/">
         </link>
