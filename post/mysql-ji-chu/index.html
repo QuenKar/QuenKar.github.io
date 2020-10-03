@@ -2,11 +2,11 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>128/最长连续序列 | quenkar</title>
+<title>MySQL-基础 | quenkar</title>
 <link rel="shortcut icon" href="https://quenkar.github.io/favicon.ico?v=1601733963351">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://quenkar.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="128/最长连续序列 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="MySQL-基础 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -20,16 +20,21 @@
 </script>
 
 
-    <meta name="description" content="题目：
-给定一个未排序的整数数组，找出最长连续序列的长度。
-要求算法的时间复杂度为 O(n)。
-示例:
-输入: [100, 4, 200, 1, 3, 2]
-输出: 4
-解释: 最长连续序列是 [1, 2, 3, 4]。
-它的长度为 4。
+    <meta name="description" content="基础关键字
+SELECT FROM
+# 查询一个字段
+ SELECT 
+  last_name 
+ FROM
+  employees ;
+
+# 查询多个字段
+ SELECT 
+  last_name,
+  salary,
+  email 
 ..." />
-    <meta name="keywords" content="leetcode" />
+    <meta name="keywords" content="MySQL" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -91,93 +96,111 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              128/最长连续序列
+              MySQL-基础
             </h2>
             <div class="post-info">
               <span>
-                2020-09-20
+                2020-10-03
               </span>
               <span>
-                2 min read
+                1 min read
               </span>
               
-                <a href="https://quenkar.github.io/tag/BC76y0qv1/" class="post-tag">
-                  # leetcode
+                <a href="https://quenkar.github.io/tag/eyyKYh2fC/" class="post-tag">
+                  # MySQL
                 </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://quenkar.github.io/post-images/128zui-chang-lian-xu-xu-lie.png" alt="">
+              <img class="post-feature-image" src="https://quenkar.github.io/post-images/mysql-ji-chu.png" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p><strong>题目：</strong><br>
-给定一个未排序的整数数组，找出最长连续序列的长度。<br>
-要求算法的时间复杂度为 O(n)。<br>
-示例:<br>
-输入: [100, 4, 200, 1, 3, 2]<br>
-输出: 4<br>
-解释: 最长连续序列是 [1, 2, 3, 4]。<br>
-它的长度为 4。<br>
-<strong>方法一：哈希表</strong></p>
-<pre><code class="language-c++">class Solution {
-public:
-    int longestConsecutive(vector&lt;int&gt;&amp; nums) {
-        unordered_set&lt;int&gt; st;
-
-        for(int i:nums)st.insert(i);
-        int ans=0;
-        for(int i:st)
-        {
-            if(i!=INT_MIN&amp;&amp;st.count(i-1))
-                continue;
-            
-            int cnt=1;
-            while(i!=INT_MIN&amp;&amp;st.count(i+1))
-            {
-                cnt++;i++;
-            }
-            ans=max(ans,cnt);
-        }
-        return ans;
-    }
-
-};
+                <h2 id="基础关键字">基础关键字</h2>
+<p><strong>SELECT</strong> <strong>FROM</strong></p>
+<h4 id="查询一个字段"># 查询一个字段</h4>
+<pre><code class="language-sql"> SELECT 
+  last_name 
+ FROM
+  employees ;
 </code></pre>
-<p><strong>方法二：排序+遍历</strong></p>
-<pre><code class="language-c++">class Solution {
-public:
-    int longestConsecutive(vector&lt;int&gt;&amp; nums) {
-        int m=nums.size();
-        if(m==0)return 0;
-
-        sort(nums.begin(),nums.end());
-
-        vector&lt;int&gt; dp(nums.size(),1);
-        int mlong=1;
-        for(int i=1;i&lt;nums.size();i++)
-        {
-            if(nums[i]==nums[i-1]+1)
-            {
-                dp[i]+=dp[i-1];
-                mlong=max(dp[i],mlong);
-            }
-            else if(nums[i]==nums[i-1])
-                dp[i]=dp[i-1];
-        }
-        return mlong;
-    }
-};
+<h4 id="查询多个字段"># 查询多个字段</h4>
+<pre><code class="language-sql"> SELECT 
+  last_name,
+  salary,
+  email 
+ FROM
+  employees ;
 </code></pre>
+<h4 id="查询所有字段"># 查询所有字段</h4>
+<pre><code class="language-sql"> SELECT 
+   * 
+ FROM
+  employees ;
+</code></pre>
+<h4 id="查询常量值"># 查询常量值</h4>
+<p><code>SELECT 100;</code></p>
+<p><code>SELECT 'john';</code></p>
+<h4 id="查询表达式"># 查询表达式</h4>
+<p><code>SELECT 100*4398;</code></p>
+<h4 id="查询函数"># 查询函数</h4>
+<p><code>SELECT VERSION() ;</code></p>
+<h4 id="起别名"># 起别名</h4>
+<p><code>SELECT 100%98 AS result;</code></p>
+<p><code>SELECT last_name 姓,first_name 名 FROM employees;</code></p>
+<p><code>SELECT salary AS &quot;out put&quot; FROM employees;</code></p>
+<h4 id="去重"># 去重</h4>
+<p><code>SELECT DISTINCT department_id FROM employees;</code></p>
+<h4 id="mysql中的号">#  mysql中的+号</h4>
+<p><strong>只有运算符的作用，不会像java或者c++一样可以直接拼接字符串</strong></p>
+<pre><code class="language-sql"> select 100+50;
+ select '123'+79;# 试图将字符串转为数字型，转换成功继续做加法
+ select 'john'+40;# 假如转换失败，则字符型转换成0
+ select null+10;# 只要有一方为null，结果就是null
+</code></pre>
+<p><code>SELECT last_name + first_name AS 姓名 FROM employees ;</code></p>
+<p><strong>只会显示0</strong></p>
+<h4 id="显示表的字段"># 显示表的字段</h4>
+<p><code>DESC departments;</code></p>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%9F%BA%E7%A1%80%E5%85%B3%E9%94%AE%E5%AD%97">基础关键字</a><br>
+*
+<ul>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E4%B8%80%E4%B8%AA%E5%AD%97%E6%AE%B5"># 查询一个字段</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E5%A4%9A%E4%B8%AA%E5%AD%97%E6%AE%B5"># 查询多个字段</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E5%AD%97%E6%AE%B5"># 查询所有字段</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E5%B8%B8%E9%87%8F%E5%80%BC"># 查询常量值</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E8%A1%A8%E8%BE%BE%E5%BC%8F"># 查询表达式</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E5%87%BD%E6%95%B0"># 查询函数</a></li>
+<li><a href="#%E8%B5%B7%E5%88%AB%E5%90%8D"># 起别名</a></li>
+<li><a href="#%E5%8E%BB%E9%87%8D"># 去重</a></li>
+<li><a href="#mysql%E4%B8%AD%E7%9A%84%E5%8F%B7">#  mysql中的+号</a></li>
+<li><a href="#%E6%98%BE%E7%A4%BA%E8%A1%A8%E7%9A%84%E5%AD%97%E6%AE%B5"># 显示表的字段</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://quenkar.github.io/post/nginx-pei-zhi/">
+              <h3 class="post-title">
+                Nginx安装
+              </h3>
+            </a>
+          </div>
         
 
         
