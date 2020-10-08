@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2020-10-08T10:54:49.629Z</updated>
+    <updated>2020-10-08T10:56:52.764Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -143,9 +143,8 @@
   ) output 
  FROM
   employees ;
-
-###  \# case函数
 </code></pre>
+<h3 id="case函数"># case函数</h3>
 <p>语法：<br>
 case: 判断的字段或者表达式<br>
 when 常量1 then 要显示的值或者语句<br>
@@ -161,7 +160,7 @@ end</p>
  END AS 新工资
  FROM employees;
 </code></pre>
-<h4 id="2-多重ifelse-ifelse"># 2 多重if……else if……else</h4>
+<h4 id="2-类似于多重ifelse"># 2 类似于多重if……else</h4>
 <p>case<br>
 when 条件1 then 要显示的值或者语句<br>
 when 条件2 then 要显示的值或者语句<br>
