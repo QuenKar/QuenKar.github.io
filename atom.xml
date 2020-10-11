@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2020-10-11T12:18:26.477Z</updated>
+    <updated>2020-10-11T12:19:47.566Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -137,7 +137,7 @@
 <h3 id="now">#now</h3>
 <p><code>SELECT NOW() ;</code></p>
 <h3 id="curdate">#curdate</h3>
-<p>``SELECT CURDATE() ;`</p>
+<p><code>SELECT CURDATE() ;</code></p>
 <h3 id="curtime">#curtime</h3>
 <pre><code class="language-sql">SELECT 
   CURTIME() ;
