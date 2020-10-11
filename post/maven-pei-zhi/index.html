@@ -2,11 +2,11 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Nginx安装 | quenkar</title>
+<title>Maven配置 | quenkar</title>
 <link rel="shortcut icon" href="https://quenkar.github.io/favicon.ico?v=1602418702577">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://quenkar.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Nginx安装 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Maven配置 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -20,14 +20,14 @@
 </script>
 
 
-    <meta name="description" content="环境：Ubuntu 18.04
-权限：root
-1.安装pcre-8.37.tar.gz
-https://ftp.pcre.org/pub/pcre/
-解压 tar -xvf pcre-8.37.tar.gz
-进入pcre-8.37执行
-...." />
-    <meta name="keywords" content="Nginx" />
+    <meta name="description" content="安装Maven
+下载
+http://maven.apache.org/
+配置环境变量
+以我的计算机为例：
+MAVEN_HOME D:\apache-maven-3.6.3 path %MAVEN_HOME%\bin
+查看 Maven 版本信..." />
+    <meta name="keywords" content="Maven" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -89,75 +89,84 @@ https://ftp.pcre.org/pub/pcre/
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Nginx安装
+              Maven配置
             </h2>
             <div class="post-info">
               <span>
-                2020-10-01
+                2020-10-11
               </span>
               <span>
                 2 min read
               </span>
               
-                <a href="https://quenkar.github.io/tag/-Kr8R0Szj/" class="post-tag">
-                  # Nginx
+                <a href="https://quenkar.github.io/tag/DmmZGGi7J/" class="post-tag">
+                  # Maven
                 </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://quenkar.github.io/post-images/nginx-pei-zhi.png" alt="">
+              <img class="post-feature-image" src="https://quenkar.github.io/post-images/maven-pei-zhi.jpg" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p><strong>环境：Ubuntu 18.04</strong></p>
-<p><strong>权限：root</strong></p>
-<h3 id="1安装pcre-837targz">1.安装pcre-8.37.tar.gz</h3>
-<p><a href="https://ftp.pcre.org/pub/pcre/">https://ftp.pcre.org/pub/pcre/</a></p>
-<p>解压 <code>tar -xvf pcre-8.37.tar.gz</code></p>
-<p>进入pcre-8.37执行</p>
-<p><code>./configure</code></p>
-<p>然后再执行</p>
-<p><code>make &amp;&amp; make install</code></p>
-<p><strong>至少要在sudo权限下执行，否则就会Permission denied</strong><br>
-<img src="https://quenkar.github.io/post-images/1601560193664.png" alt="" loading="lazy"></p>
-<p>执行<code>pcre-config --version</code>查看版本</p>
-<pre><code class="language-bash">$ pcre-config --version
-8.39
+                <h2 id="安装maven">安装Maven</h2>
+<h3 id="下载">下载</h3>
+<p>http://maven.apache.org/</p>
+<h3 id="配置环境变量">配置环境变量</h3>
+<p>以我的计算机为例：</p>
+<p><code>MAVEN_HOME D:\apache-maven-3.6.3 path</code> <code>%MAVEN_HOME%\bin</code></p>
+<h3 id="查看-maven-版本信息验证安装是否正确">查看 Maven 版本信息验证安装是否正确</h3>
+<p><code>mvn -v</code></p>
+<figure data-type="image" tabindex="1"><img src="https://quenkar.github.io/post-images/1602418609000.png" alt="" loading="lazy"></figure>
+<h2 id="配置本地仓库和阿里云镜像">配置本地仓库和阿里云镜像</h2>
+<h3 id="配置本地仓库">配置本地仓库</h3>
+<p>Maven 的核心程序并不包含具体功能，仅负责宏观调度。具体功能由插 件来完成。Maven 核心程序会到本地仓库中查找插件。如果本地仓库中 没有就会从远程中央仓库下载。此时如果不能上网则无法执行 Maven 的 具体功能。为了解决这个问题，我们可以将 Maven 的本地仓库指向一个 在联网情况下下载好的目录。</p>
+<p>Maven 默认的本地仓库：</p>
+<p>~.m2\repository 目录</p>
+<h3 id="找到-maven-的核心配置文件-settingsxml">找到 Maven 的核心配置文件 settings.xml</h3>
+<p>文件： 解压目录 D:\apache-maven-3.6.3\conf\settings.xml</p>
+<p>设置方式 本地仓库的路径 E:\LocalRepository</p>
+<figure data-type="image" tabindex="2"><img src="https://quenkar.github.io/post-images/1602418620472.png" alt="" loading="lazy"></figure>
+<h2 id="配置阿里云镜像">配置阿里云镜像</h2>
+<pre><code class="language-xml">&lt;mirrors&gt;
+ &lt;mirror&gt;
+
+   &lt;id&gt;alimaven&lt;/id&gt;
+
+   &lt;name&gt;aliyun maven&lt;/name&gt;
+
+   &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;
+
+   &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;    
+
+  &lt;/mirror&gt;
+&lt;/mirrors&gt;
 </code></pre>
-<h3 id="2安装nginx">2.安装Nginx</h3>
-<p>前置条件安装</p>
-<pre><code class="language-bash">sudo apt-get install zlib1g
-
-sudo apt-get install zlib1g.dev
-
-sudo apt-get install openssl
-
-sudo apt-get install libssl-dev
-</code></pre>
-<p>官网下载nginx</p>
-<p>http://nginx.org/en/download.html</p>
-<p>以nginx-1.12.2版本演示<a href="http://nginx.org/download/nginx-1.12.2.tar.gz"> nginx-1.12.2</a></p>
-<p>解压<code>tar -xvf nginx-1.12.2.tar.gz</code></p>
-<p>进入解压后的目录，执行<code>./configure</code></p>
-<p>权限要为<strong>root</strong>，用sudo执行照样权限不够</p>
-<figure data-type="image" tabindex="1"><img src="https://quenkar.github.io/post-images/1601560218025.png" alt="" loading="lazy"></figure>
-<p><strong>root权限</strong>下再执行<code>make &amp;&amp; make install</code></p>
-<p>进入 <code>/usr/local/nginx/sbin</code> 执行<code>sudo ./nginx</code>启动nginx</p>
-<p>到这里就算安装完成了</p>
-<p>再配置一下系统防火墙，设置一下对外的端口号就可以访问了😋</p>
-<figure data-type="image" tabindex="2"><img src="https://quenkar.github.io/post-images/1601560229643.png" alt="" loading="lazy"></figure>
+<h2 id="在-idea-中使用-maven">在 Idea 中使用 Maven</h2>
+<p><code>Settings-&gt;Build,Execution,Deployment-&gt;Build Tools-&gt;Maven</code></p>
+<figure data-type="image" tabindex="3"><img src="https://quenkar.github.io/post-images/1602418626351.png" alt="" loading="lazy"></figure>
+<p>将前面配置过的setting.xml覆盖原来的，再自己选择一个仓库，或者使用默认C盘下的仓库</p>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li>
+<li><a href="#%E5%AE%89%E8%A3%85maven">安装Maven</a>
 <ul>
-<li><a href="#1%E5%AE%89%E8%A3%85pcre-837targz">1.安装pcre-8.37.tar.gz</a></li>
-<li><a href="#2%E5%AE%89%E8%A3%85nginx">2.安装Nginx</a></li>
+<li><a href="#%E4%B8%8B%E8%BD%BD">下载</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F">配置环境变量</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B-maven-%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF%E9%AA%8C%E8%AF%81%E5%AE%89%E8%A3%85%E6%98%AF%E5%90%A6%E6%AD%A3%E7%A1%AE">查看 Maven 版本信息验证安装是否正确</a></li>
 </ul>
 </li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E5%92%8C%E9%98%BF%E9%87%8C%E4%BA%91%E9%95%9C%E5%83%8F">配置本地仓库和阿里云镜像</a>
+<ul>
+<li><a href="#%E9%85%8D%E7%BD%AE%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93">配置本地仓库</a></li>
+<li><a href="#%E6%89%BE%E5%88%B0-maven-%E7%9A%84%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-settingsxml">找到 Maven 的核心配置文件 settings.xml</a></li>
+</ul>
+</li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E9%98%BF%E9%87%8C%E4%BA%91%E9%95%9C%E5%83%8F">配置阿里云镜像</a></li>
+<li><a href="#%E5%9C%A8-idea-%E4%B8%AD%E4%BD%BF%E7%94%A8-maven">在 Idea 中使用 Maven</a></li>
 </ul>
 </li>
 </ul>
@@ -170,9 +179,9 @@ sudo apt-get install libssl-dev
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://quenkar.github.io/post/idea-tui-jian-cha-jian-ji-xiang-guan-pei-zhi/">
+            <a href="https://quenkar.github.io/post/mysql-chang-jian-han-shu/">
               <h3 class="post-title">
-                IDEA推荐插件及相关配置
+                MySQL-常见函数
               </h3>
             </a>
           </div>

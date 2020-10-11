@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2020-10-08T10:56:52.764Z</updated>
+    <updated>2020-10-11T12:18:26.477Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -10,6 +10,51 @@
     <logo>https://quenkar.github.io/images/avatar.png</logo>
     <icon>https://quenkar.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, quenkar</rights>
+    <entry>
+        <title type="html"><![CDATA[Maven配置]]></title>
+        <id>https://quenkar.github.io/post/maven-pei-zhi/</id>
+        <link href="https://quenkar.github.io/post/maven-pei-zhi/">
+        </link>
+        <updated>2020-10-11T12:14:39.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="安装maven">安装Maven</h2>
+<h3 id="下载">下载</h3>
+<p>http://maven.apache.org/</p>
+<h3 id="配置环境变量">配置环境变量</h3>
+<p>以我的计算机为例：</p>
+<p><code>MAVEN_HOME D:\apache-maven-3.6.3 path</code> <code>%MAVEN_HOME%\bin</code></p>
+<h3 id="查看-maven-版本信息验证安装是否正确">查看 Maven 版本信息验证安装是否正确</h3>
+<p><code>mvn -v</code></p>
+<figure data-type="image" tabindex="1"><img src="https://quenkar.github.io/post-images/1602418609000.png" alt="" loading="lazy"></figure>
+<h2 id="配置本地仓库和阿里云镜像">配置本地仓库和阿里云镜像</h2>
+<h3 id="配置本地仓库">配置本地仓库</h3>
+<p>Maven 的核心程序并不包含具体功能，仅负责宏观调度。具体功能由插 件来完成。Maven 核心程序会到本地仓库中查找插件。如果本地仓库中 没有就会从远程中央仓库下载。此时如果不能上网则无法执行 Maven 的 具体功能。为了解决这个问题，我们可以将 Maven 的本地仓库指向一个 在联网情况下下载好的目录。</p>
+<p>Maven 默认的本地仓库：</p>
+<p>~.m2\repository 目录</p>
+<h3 id="找到-maven-的核心配置文件-settingsxml">找到 Maven 的核心配置文件 settings.xml</h3>
+<p>文件： 解压目录 D:\apache-maven-3.6.3\conf\settings.xml</p>
+<p>设置方式 本地仓库的路径 E:\LocalRepository</p>
+<figure data-type="image" tabindex="2"><img src="https://quenkar.github.io/post-images/1602418620472.png" alt="" loading="lazy"></figure>
+<h2 id="配置阿里云镜像">配置阿里云镜像</h2>
+<pre><code class="language-xml">&lt;mirrors&gt;
+ &lt;mirror&gt;
+
+   &lt;id&gt;alimaven&lt;/id&gt;
+
+   &lt;name&gt;aliyun maven&lt;/name&gt;
+
+   &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;
+
+   &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;    
+
+  &lt;/mirror&gt;
+&lt;/mirrors&gt;
+</code></pre>
+<h2 id="在-idea-中使用-maven">在 Idea 中使用 Maven</h2>
+<p><code>Settings-&gt;Build,Execution,Deployment-&gt;Build Tools-&gt;Maven</code></p>
+<figure data-type="image" tabindex="3"><img src="https://quenkar.github.io/post-images/1602418626351.png" alt="" loading="lazy"></figure>
+<p>将前面配置过的setting.xml覆盖原来的，再自己选择一个仓库，或者使用默认C盘下的仓库</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[MySQL-常见函数]]></title>
         <id>https://quenkar.github.io/post/mysql-chang-jian-han-shu/</id>
@@ -747,45 +792,6 @@ std::pair&lt;iterator,bool&gt; insert( P&amp;&amp; value );
 <code>vim ~/.zshrc</code><br>
 推荐ys这个主题：<br>
 <code>ZSH_THEME=&quot;ys&quot;</code></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[152/乘积最大子序列]]></title>
-        <id>https://quenkar.github.io/post/152cheng-ji-zui-da-zi-xu-lie/</id>
-        <link href="https://quenkar.github.io/post/152cheng-ji-zui-da-zi-xu-lie/">
-        </link>
-        <updated>2020-09-21T09:30:40.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>题目：</strong><br>
-给你一个整数数组 nums ，请你找出数组中乘积最大的连续子数组（该子数组中至少包含一个数字）。<br>
-示例 1:<br>
-输入: [2,3,-2,4]<br>
-输出: 6<br>
-解释: 子数组 [2,3] 有最大乘积 6。<br>
-示例 2:<br>
-输入: [-2,0,-1]<br>
-输出: 0<br>
-解释: 结果不能为 2, 因为 [-2,-1] 不是子数组。</p>
-<p>从别人那里扒来的神奇解法，主要是要注意负数的情况，当遇到一个负数的时候不能确定后面还有没有负数可以使结果变得更大，需要维护一个最小值来记录。<br>
-这里使用<strong>swap进行交换，因为遇到负数，之前最大的变成最小的，最小的反而变成最大数</strong>。（这也太难想了😪）</p>
-<pre><code class="language-c++">class Solution {
-public:
-    int maxProduct(vector&lt;int&gt;&amp; nums) {
-        int imax=1,imin=1,ans=INT_MIN;
-
-        for(int i:nums)
-        {
-            if(i&lt;0)
-                swap(imin,imax);
-
-            imax=max(imax*i,i);
-            imin=min(imin*i,i);
-        
-            ans=max(ans,imax);
-        }
-        return ans;
-    }
-};
-</code></pre>
 ]]></content>
     </entry>
 </feed>
