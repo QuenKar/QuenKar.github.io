@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2020-10-18T11:02:19.201Z</updated>
+    <updated>2020-10-18T11:07:42.503Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -249,9 +249,6 @@ set time_zone ='+9:00';
 	unique 唯一，用于保证该字段的值具有唯一性，可以为空
 	check 检查约束（mysql中不支持）
 	foreign key 外键，限制两个表的关系，用于保证该字段的值必须来自于主表的关联列的值
-</code></pre>
-<h4 id=""></h4>
-<pre><code class="language-sql">
 </code></pre>
 <h4 id="列级约束">列级约束</h4>
 <h5 id="语法">语法</h5>
