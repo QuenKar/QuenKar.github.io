@@ -1,0 +1,574 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MySQL-DML | quenkar</title>
+<link rel="shortcut icon" href="https://quenkar.github.io/favicon.ico?v=1603018935047">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://quenkar.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="MySQL-DML | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-179429190-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-179429190-1');
+</script>
+
+
+    <meta name="description" content="DML语言
+插入
+语法：
+insert into 表名(字段名，...) values(值1，...);
+INSERT INTO author 
+VALUES
+  (1, '村上春树', '日本'),
+  (2, '海明威', '美国'),..." />
+    <meta name="keywords" content="MySQL" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://quenkar.github.io">
+  <img class="avatar" src="https://quenkar.github.io/images/avatar.png?v=1603018935047" alt="">
+  </a>
+  <h1 class="site-title">
+    quenkar
+  </h1>
+  <p class="site-description">
+    我已经决定吃喜欢的东西，过短命的人生了
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              MySQL-DML
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-10-18
+              </span>
+              <span>
+                7 min read
+              </span>
+              
+                <a href="https://quenkar.github.io/tag/eyyKYh2fC/" class="post-tag">
+                  # MySQL
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://quenkar.github.io/post-images/mysql-dml.jpg" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h2 id="dml语言">DML语言</h2>
+<h3 id="插入">插入</h3>
+<p>语法：<br>
+<code>insert into 表名(字段名，...) values(值1，...);</code></p>
+<pre><code class="language-sql">INSERT INTO author 
+VALUES
+  (1, '村上春树', '日本'),
+  (2, '海明威', '美国'),
+  (3, '鲁迅', '中国') ;
+</code></pre>
+<p>特点：</p>
+<pre><code>1、字段类型和值类型一致或兼容，而且一一对应
+2、可以为空的字段，可以不用插入值，或用null填充
+3、不可以为空的字段，必须插入值
+4、字段个数和值的个数必须一致
+5、字段可以省略，但默认所有字段，并且顺序和表中的存储顺序一致
+</code></pre>
+<h3 id="修改">修改</h3>
+<h4 id="修改单表语法">修改单表语法：</h4>
+<pre><code>update 表名 set 字段=新值,字段=新值
+【where 条件】
+</code></pre>
+<pre><code class="language-sql">UPDATE beauty
+SET phone ='184321798'
+WHERE NAME LIKE '%唐%';
+
+UPDATE boys
+SET boyName='张飞',userCP=321
+WHERE id=2;
+</code></pre>
+<h4 id="修改多表语法">修改多表语法：</h4>
+<pre><code>update 表1 别名1,表2 别名2
+set 字段=新值，字段=新值
+where 连接条件
+and 筛选条件
+</code></pre>
+<pre><code class="language-sql">UPDATE 
+  boys bo 
+  INNER JOIN beauty b 
+    ON bo.`id` = b.`boyfriend_id` SET b.`phone` = 1321 
+WHERE bo.`boyName` = '张无忌' ;
+</code></pre>
+<h3 id="删除">删除</h3>
+<h4 id="方式1delete语句">方式1：delete语句</h4>
+<p>单表的删除： ★<br>
+<code>delete from 表名 【where 筛选条件】</code></p>
+<pre><code class="language-sql">DELETE 
+FROM
+  beauty 
+WHERE phone LIKE '%9' ;
+</code></pre>
+<p>多表的删除：<br>
+delete 别名1，别名2<br>
+from 表1 别名1，表2 别名2<br>
+where 连接条件<br>
+and 筛选条件;</p>
+<h4 id="方式2truncate语句">方式2：truncate语句</h4>
+<p><code>truncate table 表名</code></p>
+<pre><code class="language-sql">TRUNCATE TABLE boys ;
+</code></pre>
+<h4 id="两种方式的区别">两种方式的区别</h4>
+<pre><code>#1.truncate不能加where条件，而delete可以加where条件
+
+#2.truncate的效率高一丢丢
+
+#3.truncate 删除带自增长的列的表后，如果再插入数据，数据从1开始
+#delete 删除带自增长列的表后，如果再插入数据，数据从上一次的断点处开始
+
+#4.truncate删除不能回滚，delete删除可以回滚
+</code></pre>
+<h2 id="ddl语句">DDL语句</h2>
+<h3 id="库和表的管理">库和表的管理</h3>
+<h4 id="库的管理">库的管理：</h4>
+<pre><code class="language-sql">一、创建库
+create database 库名
+二、删除库
+drop database 库名
+</code></pre>
+<h4 id="表的管理">表的管理：</h4>
+<h5 id="创建表">创建表</h5>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS stuinfo(
+	stuId INT,
+	stuName VARCHAR(20),
+	gender CHAR,
+	bornDate DATETIME);
+
+DESC stuinfo;
+</code></pre>
+<h5 id="修改表-alter">修改表 alter</h5>
+<p>语法：<code>ALTER TABLE 表名 ADD|MODIFY|DROP|CHANGE COLUMN 字段名 【字段类型】</code>;</p>
+<pre><code class="language-sql">#修改字段名
+ALTER TABLE studentinfo CHANGE COLUMN sex gender CHAR;
+
+#修改表名
+ALTER TABLE stuinfo RENAME [TO]  studentinfo;
+
+#修改字段类型和列级约束
+ALTER TABLE studentinfo MODIFY COLUMN borndate DATE ;
+
+#添加字段
+ALTER TABLE studentinfo ADD COLUMN email VARCHAR(20) first;
+
+#删除字段
+ALTER TABLE studentinfo DROP COLUMN email;
+
+#更改库的字符集
+ALTER DATABASE books CHARACTER SET gbk;
+</code></pre>
+<h5 id="删除表">删除表</h5>
+<p><code>DROP TABLE [IF EXISTS] studentinfo;</code></p>
+<h3 id="常见数据类型">常见数据类型</h3>
+<pre><code class="language-txt">数值型：
+   整型
+   小数：
+      定点数
+      浮点数
+字符型
+   较短的文本：char,varchar
+   较长的文本:text,blob（较长的二进制数据）
+日期型
+</code></pre>
+<h4 id="整型">整型</h4>
+<pre><code class="language-sql">分类：
+   tinyint 1B
+   smallint 2B
+   mediumint 3B
+   int 4B
+   bigint 8B
+</code></pre>
+<h5 id="如何设置无符号和有符号">如何设置无符号和有符号</h5>
+<pre><code class="language-sql">DROP TABLE IF EXISTS tab_int;
+CREATE TABLE tab_int(
+   t1 INT(7) ZEROFILL,# 设置了zerofill自动表示unsigned
+   t2 INT(3) UNSIGNED
+);
+
+-- 设置长度，不设置会有默认长度，长度代表显示的默认宽度
+</code></pre>
+<h5 id="如果超出范围自动转为临界值并且报出警告out-of-range">如果超出范围自动转为临界值，并且报出警告out of range</h5>
+<pre><code class="language-sql">INSERT INTO tab_int VALUES(43829439824328321,-321);
+</code></pre>
+<h4 id="小数">小数</h4>
+<pre><code class="language-sql">浮点型：
+   float(M,D)
+   double(M,D)
+定点型：
+   DEC/DECMAL(M,D)（精确度要求较高的情况使用）
+
+特点：
+# 1 M:整数+小数位数
+   D:小数点后的位数(四舍五入)
+# 2 M和D可以省略
+   如果是decimal，则M默认为10，D为0
+   如果是float和double，则会根据插入的数值精度来决定精度
+</code></pre>
+<pre><code class="language-sql">CREATE TABLE tab_float(
+   f1 FLOAT,
+   f2 DOUBLE(5,2),
+   f3 DEC(5,2)
+);
+INSERT INTO tab_float VALUES(123.456,123.45,123.45);
+</code></pre>
+<h4 id="字符型">字符型</h4>
+<pre><code class="language-sql">较短的文本：
+   char
+   varchar
+较长的文本：
+   text：
+   blob：（二进制）
+其他：
+   enum
+   set
+   
+特点：
+char(M)与varchar(M)
+char代表固定长度的字符，varchar代表可变长度的字符。
+varchar比较省空间，但是char效率比较高
+char可以省略M（默认为1），varchar不行
+</code></pre>
+<h4 id="enum类型">enum类型</h4>
+<pre><code class="language-sql">CREATE TABLE tab_char(
+   c1 ENUM('a','b','c')
+);
+
+INSERT INTO  tab_char 
+VALUES('a'),
+('b'),
+('M'),
+('A');# 不区分大小写
+
+SELECT * FROM tab_char;
+
+#set 类型
+
+CREATE TABLE tab_set(
+   s1 SET('a','b','c')
+);
+
+INSERT INTO tab_set VALUES('a');
+INSERT INTO tab_set VALUES('a,b');
+INSERT INTO tab_set VALUES('a,b,c');
+
+SELECT * FROM tab_set;
+</code></pre>
+<h4 id="日期型">日期型</h4>
+<pre><code class="language-sql">/*
+date：日期
+time：时间
+year：年
+      
+datetime 8字节  
+timestamp 4字节
+*/
+CREATE TABLE tab_date(
+   t1 DATETIME,
+   t2 TIMESTAMP
+);
+
+INSERT INTO tab_date VALUES(NOW(),NOW());
+
+SELECT * FROM tab_date;
+
+set time_zone ='+9:00';
+</code></pre>
+<h3 id="常见约束">常见约束</h3>
+<p><code>约束：一种限制，用于限制表中的数据，为了保证表中的数据的准确和可靠性</code></p>
+<pre><code class="language-sql">分类：
+	not null 非空约束
+	default 默认，保证该字段有默认值
+	primary key 主键，用于保证该字段的值具有唯一性，并且非空
+	unique 唯一，用于保证该字段的值具有唯一性，可以为空
+	check 检查约束（mysql中不支持）
+	foreign key 外键，限制两个表的关系，用于保证该字段的值必须来自于主表的关联列的值
+</code></pre>
+<h4 id=""></h4>
+<pre><code class="language-sql">
+</code></pre>
+<h4 id="列级约束">列级约束</h4>
+<h5 id="语法">语法</h5>
+<pre><code class="language-sql">create table 表名(
+	字段名 字段类型 列级约束，
+	字段名 字段类型 列级约束，
+	字段名 字段类型 列级约束，
+	表级约束
+)
+</code></pre>
+<pre><code class="language-sql">CREATE DATABASE students;
+USE students;
+
+CREATE TABLE stuinfo(
+	id INT PRIMARY KEY,
+	stuName VARCHAR(20) NOT NULL,
+	gender CHAR(1) CHECK (gender='男'||gender='女'),-- 无效
+	seat INT UNIQUE,
+	age INT DEFAULT 18,
+	majorId INT REFERENCES major(id)
+);
+</code></pre>
+<h4 id="表级约束">表级约束</h4>
+<pre><code class="language-sql">CREATE TABLE stuinfo(
+   id INT,
+   stuName VARCHAR(20),
+   gender CHAR(1),
+   seat INT,
+   age INT,
+   majorId INT,
+   
+   CONSTRAINT pk PRIMARY KEY(id),
+   CONSTRAINT uq UNIQUE(seat),
+   CONSTRAINT ck CHECK(gender IN ('男','女')),-- 无效
+   CONSTRAINT fk_stuinfo_major FOREIGN KEY(majorId) REFERENCES major(id)
+);
+</code></pre>
+<h4 id="主键和唯一对比">主键和唯一对比</h4>
+<pre><code class="language-sql">
+primary key and unique
+
+1.主键和唯一都保证唯一性
+
+2.主键一定非空，唯一允许为空
+   unique:保证无法重复插入null值，最多只能插入一个null值
+
+3.是否允许组合 
+primary key ，unique都允许组合
+   primary key(id,stuname) 组合主键，需要两个字段完全一样才被视为一样
+</code></pre>
+<h4 id="添加列级约束">添加列级约束</h4>
+<pre><code class="language-sql">ALTER TABLE stuinfo MODIFY COLUMN stuName VARCHAR(20) NOT NULL;
+
+ALTER TABLE stuinfo MODIFY COLUMN age INT DEFAULT 18;
+
+ALTER TABLE stuinfo MODIFY COLUMN id INT PRIMARY KEY;
+</code></pre>
+<h4 id="添加表级约束">添加表级约束</h4>
+<pre><code class="language-sql">ALTER TABLE stuinfo ADD UNIQUE(seat);
+
+ALTER TABLE stuinfo ADD FOREIGN KEY(majorId) REFERENCES major(id);
+</code></pre>
+<h4 id="删除约束">删除约束</h4>
+<pre><code class="language-sql"># 1
+ALTER TABLE stuinfo MODIFY COLUMN stuName VARCHAR(20);
+
+ALTER TABLE stuinfo MODIFY COLUMN age INT;
+
+# 2
+ALTER TABLE stuinfo DROP INDEX seat;
+</code></pre>
+<h4 id="标识列">标识列</h4>
+<p><code>AUTO_INCREMENT</code>，也称为自增长列</p>
+<p>含义：可以不用手动插入值，系统提供默认的序列值</p>
+<p>1.要求是一个key，一个表中只能最多有一个标识列</p>
+<p>2.标识列的类型：<br>
+<strong>只支持数值型</strong></p>
+<pre><code class="language-sql">CREATE TABLE tab_identity(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	NAME VARCHAR(20)
+);
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#dml%E8%AF%AD%E8%A8%80">DML语言</a>
+<ul>
+<li><a href="#%E6%8F%92%E5%85%A5">插入</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9">修改</a>
+<ul>
+<li><a href="#%E4%BF%AE%E6%94%B9%E5%8D%95%E8%A1%A8%E8%AF%AD%E6%B3%95">修改单表语法：</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9%E5%A4%9A%E8%A1%A8%E8%AF%AD%E6%B3%95">修改多表语法：</a></li>
+</ul>
+</li>
+<li><a href="#%E5%88%A0%E9%99%A4">删除</a>
+<ul>
+<li><a href="#%E6%96%B9%E5%BC%8F1delete%E8%AF%AD%E5%8F%A5">方式1：delete语句</a></li>
+<li><a href="#%E6%96%B9%E5%BC%8F2truncate%E8%AF%AD%E5%8F%A5">方式2：truncate语句</a></li>
+<li><a href="#%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB">两种方式的区别</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#ddl%E8%AF%AD%E5%8F%A5">DDL语句</a>
+<ul>
+<li><a href="#%E5%BA%93%E5%92%8C%E8%A1%A8%E7%9A%84%E7%AE%A1%E7%90%86">库和表的管理</a>
+<ul>
+<li><a href="#%E5%BA%93%E7%9A%84%E7%AE%A1%E7%90%86">库的管理：</a></li>
+<li><a href="#%E8%A1%A8%E7%9A%84%E7%AE%A1%E7%90%86">表的管理：</a>
+<ul>
+<li><a href="#%E5%88%9B%E5%BB%BA%E8%A1%A8">创建表</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9%E8%A1%A8-alter">修改表 alter</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E8%A1%A8">删除表</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%B8%B8%E8%A7%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">常见数据类型</a>
+<ul>
+<li><a href="#%E6%95%B4%E5%9E%8B">整型</a>
+<ul>
+<li><a href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E6%97%A0%E7%AC%A6%E5%8F%B7%E5%92%8C%E6%9C%89%E7%AC%A6%E5%8F%B7">如何设置无符号和有符号</a></li>
+<li><a href="#%E5%A6%82%E6%9E%9C%E8%B6%85%E5%87%BA%E8%8C%83%E5%9B%B4%E8%87%AA%E5%8A%A8%E8%BD%AC%E4%B8%BA%E4%B8%B4%E7%95%8C%E5%80%BC%E5%B9%B6%E4%B8%94%E6%8A%A5%E5%87%BA%E8%AD%A6%E5%91%8Aout-of-range">如果超出范围自动转为临界值，并且报出警告out of range</a></li>
+</ul>
+</li>
+<li><a href="#%E5%B0%8F%E6%95%B0">小数</a></li>
+<li><a href="#%E5%AD%97%E7%AC%A6%E5%9E%8B">字符型</a></li>
+<li><a href="#enum%E7%B1%BB%E5%9E%8B">enum类型</a></li>
+<li><a href="#%E6%97%A5%E6%9C%9F%E5%9E%8B">日期型</a></li>
+</ul>
+</li>
+<li><a href="#%E5%B8%B8%E8%A7%81%E7%BA%A6%E6%9D%9F">常见约束</a><br>
+*
+<ul>
+<li><a href="#%E5%88%97%E7%BA%A7%E7%BA%A6%E6%9D%9F">列级约束</a>
+<ul>
+<li><a href="#%E8%AF%AD%E6%B3%95">语法</a></li>
+</ul>
+</li>
+<li><a href="#%E8%A1%A8%E7%BA%A7%E7%BA%A6%E6%9D%9F">表级约束</a></li>
+<li><a href="#%E4%B8%BB%E9%94%AE%E5%92%8C%E5%94%AF%E4%B8%80%E5%AF%B9%E6%AF%94">主键和唯一对比</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E5%88%97%E7%BA%A7%E7%BA%A6%E6%9D%9F">添加列级约束</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E8%A1%A8%E7%BA%A7%E7%BA%A6%E6%9D%9F">添加表级约束</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E7%BA%A6%E6%9D%9F">删除约束</a></li>
+<li><a href="#%E6%A0%87%E8%AF%86%E5%88%97">标识列</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://quenkar.github.io/post/jin-jie-cha-xun/">
+              <h3 class="post-title">
+                进阶查询
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  <div>Powered by <a href="https://github.com/QuenKar" target="_blank">  Quenkar</a></div>
+  <a class="rss" href="https://quenkar.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

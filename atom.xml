@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2020-10-12T13:27:04.341Z</updated>
+    <updated>2020-10-18T11:02:19.201Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -10,6 +10,332 @@
     <logo>https://quenkar.github.io/images/avatar.png</logo>
     <icon>https://quenkar.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, quenkar</rights>
+    <entry>
+        <title type="html"><![CDATA[MySQL-DML]]></title>
+        <id>https://quenkar.github.io/post/mysql-dml/</id>
+        <link href="https://quenkar.github.io/post/mysql-dml/">
+        </link>
+        <updated>2020-10-18T11:00:07.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="dml语言">DML语言</h2>
+<h3 id="插入">插入</h3>
+<p>语法：<br>
+<code>insert into 表名(字段名，...) values(值1，...);</code></p>
+<pre><code class="language-sql">INSERT INTO author 
+VALUES
+  (1, '村上春树', '日本'),
+  (2, '海明威', '美国'),
+  (3, '鲁迅', '中国') ;
+</code></pre>
+<p>特点：</p>
+<pre><code>1、字段类型和值类型一致或兼容，而且一一对应
+2、可以为空的字段，可以不用插入值，或用null填充
+3、不可以为空的字段，必须插入值
+4、字段个数和值的个数必须一致
+5、字段可以省略，但默认所有字段，并且顺序和表中的存储顺序一致
+</code></pre>
+<h3 id="修改">修改</h3>
+<h4 id="修改单表语法">修改单表语法：</h4>
+<pre><code>update 表名 set 字段=新值,字段=新值
+【where 条件】
+</code></pre>
+<pre><code class="language-sql">UPDATE beauty
+SET phone ='184321798'
+WHERE NAME LIKE '%唐%';
+
+UPDATE boys
+SET boyName='张飞',userCP=321
+WHERE id=2;
+</code></pre>
+<h4 id="修改多表语法">修改多表语法：</h4>
+<pre><code>update 表1 别名1,表2 别名2
+set 字段=新值，字段=新值
+where 连接条件
+and 筛选条件
+</code></pre>
+<pre><code class="language-sql">UPDATE 
+  boys bo 
+  INNER JOIN beauty b 
+    ON bo.`id` = b.`boyfriend_id` SET b.`phone` = 1321 
+WHERE bo.`boyName` = '张无忌' ;
+</code></pre>
+<h3 id="删除">删除</h3>
+<h4 id="方式1delete语句">方式1：delete语句</h4>
+<p>单表的删除： ★<br>
+<code>delete from 表名 【where 筛选条件】</code></p>
+<pre><code class="language-sql">DELETE 
+FROM
+  beauty 
+WHERE phone LIKE '%9' ;
+</code></pre>
+<p>多表的删除：<br>
+delete 别名1，别名2<br>
+from 表1 别名1，表2 别名2<br>
+where 连接条件<br>
+and 筛选条件;</p>
+<h4 id="方式2truncate语句">方式2：truncate语句</h4>
+<p><code>truncate table 表名</code></p>
+<pre><code class="language-sql">TRUNCATE TABLE boys ;
+</code></pre>
+<h4 id="两种方式的区别">两种方式的区别</h4>
+<pre><code>#1.truncate不能加where条件，而delete可以加where条件
+
+#2.truncate的效率高一丢丢
+
+#3.truncate 删除带自增长的列的表后，如果再插入数据，数据从1开始
+#delete 删除带自增长列的表后，如果再插入数据，数据从上一次的断点处开始
+
+#4.truncate删除不能回滚，delete删除可以回滚
+</code></pre>
+<h2 id="ddl语句">DDL语句</h2>
+<h3 id="库和表的管理">库和表的管理</h3>
+<h4 id="库的管理">库的管理：</h4>
+<pre><code class="language-sql">一、创建库
+create database 库名
+二、删除库
+drop database 库名
+</code></pre>
+<h4 id="表的管理">表的管理：</h4>
+<h5 id="创建表">创建表</h5>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS stuinfo(
+	stuId INT,
+	stuName VARCHAR(20),
+	gender CHAR,
+	bornDate DATETIME);
+
+DESC stuinfo;
+</code></pre>
+<h5 id="修改表-alter">修改表 alter</h5>
+<p>语法：<code>ALTER TABLE 表名 ADD|MODIFY|DROP|CHANGE COLUMN 字段名 【字段类型】</code>;</p>
+<pre><code class="language-sql">#修改字段名
+ALTER TABLE studentinfo CHANGE COLUMN sex gender CHAR;
+
+#修改表名
+ALTER TABLE stuinfo RENAME [TO]  studentinfo;
+
+#修改字段类型和列级约束
+ALTER TABLE studentinfo MODIFY COLUMN borndate DATE ;
+
+#添加字段
+ALTER TABLE studentinfo ADD COLUMN email VARCHAR(20) first;
+
+#删除字段
+ALTER TABLE studentinfo DROP COLUMN email;
+
+#更改库的字符集
+ALTER DATABASE books CHARACTER SET gbk;
+</code></pre>
+<h5 id="删除表">删除表</h5>
+<p><code>DROP TABLE [IF EXISTS] studentinfo;</code></p>
+<h3 id="常见数据类型">常见数据类型</h3>
+<pre><code class="language-txt">数值型：
+   整型
+   小数：
+      定点数
+      浮点数
+字符型
+   较短的文本：char,varchar
+   较长的文本:text,blob（较长的二进制数据）
+日期型
+</code></pre>
+<h4 id="整型">整型</h4>
+<pre><code class="language-sql">分类：
+   tinyint 1B
+   smallint 2B
+   mediumint 3B
+   int 4B
+   bigint 8B
+</code></pre>
+<h5 id="如何设置无符号和有符号">如何设置无符号和有符号</h5>
+<pre><code class="language-sql">DROP TABLE IF EXISTS tab_int;
+CREATE TABLE tab_int(
+   t1 INT(7) ZEROFILL,# 设置了zerofill自动表示unsigned
+   t2 INT(3) UNSIGNED
+);
+
+-- 设置长度，不设置会有默认长度，长度代表显示的默认宽度
+</code></pre>
+<h5 id="如果超出范围自动转为临界值并且报出警告out-of-range">如果超出范围自动转为临界值，并且报出警告out of range</h5>
+<pre><code class="language-sql">INSERT INTO tab_int VALUES(43829439824328321,-321);
+</code></pre>
+<h4 id="小数">小数</h4>
+<pre><code class="language-sql">浮点型：
+   float(M,D)
+   double(M,D)
+定点型：
+   DEC/DECMAL(M,D)（精确度要求较高的情况使用）
+
+特点：
+# 1 M:整数+小数位数
+   D:小数点后的位数(四舍五入)
+# 2 M和D可以省略
+   如果是decimal，则M默认为10，D为0
+   如果是float和double，则会根据插入的数值精度来决定精度
+</code></pre>
+<pre><code class="language-sql">CREATE TABLE tab_float(
+   f1 FLOAT,
+   f2 DOUBLE(5,2),
+   f3 DEC(5,2)
+);
+INSERT INTO tab_float VALUES(123.456,123.45,123.45);
+</code></pre>
+<h4 id="字符型">字符型</h4>
+<pre><code class="language-sql">较短的文本：
+   char
+   varchar
+较长的文本：
+   text：
+   blob：（二进制）
+其他：
+   enum
+   set
+   
+特点：
+char(M)与varchar(M)
+char代表固定长度的字符，varchar代表可变长度的字符。
+varchar比较省空间，但是char效率比较高
+char可以省略M（默认为1），varchar不行
+</code></pre>
+<h4 id="enum类型">enum类型</h4>
+<pre><code class="language-sql">CREATE TABLE tab_char(
+   c1 ENUM('a','b','c')
+);
+
+INSERT INTO  tab_char 
+VALUES('a'),
+('b'),
+('M'),
+('A');# 不区分大小写
+
+SELECT * FROM tab_char;
+
+#set 类型
+
+CREATE TABLE tab_set(
+   s1 SET('a','b','c')
+);
+
+INSERT INTO tab_set VALUES('a');
+INSERT INTO tab_set VALUES('a,b');
+INSERT INTO tab_set VALUES('a,b,c');
+
+SELECT * FROM tab_set;
+</code></pre>
+<h4 id="日期型">日期型</h4>
+<pre><code class="language-sql">/*
+date：日期
+time：时间
+year：年
+      
+datetime 8字节  
+timestamp 4字节
+*/
+CREATE TABLE tab_date(
+   t1 DATETIME,
+   t2 TIMESTAMP
+);
+
+INSERT INTO tab_date VALUES(NOW(),NOW());
+
+SELECT * FROM tab_date;
+
+set time_zone ='+9:00';
+</code></pre>
+<h3 id="常见约束">常见约束</h3>
+<p><code>约束：一种限制，用于限制表中的数据，为了保证表中的数据的准确和可靠性</code></p>
+<pre><code class="language-sql">分类：
+	not null 非空约束
+	default 默认，保证该字段有默认值
+	primary key 主键，用于保证该字段的值具有唯一性，并且非空
+	unique 唯一，用于保证该字段的值具有唯一性，可以为空
+	check 检查约束（mysql中不支持）
+	foreign key 外键，限制两个表的关系，用于保证该字段的值必须来自于主表的关联列的值
+</code></pre>
+<h4 id=""></h4>
+<pre><code class="language-sql">
+</code></pre>
+<h4 id="列级约束">列级约束</h4>
+<h5 id="语法">语法</h5>
+<pre><code class="language-sql">create table 表名(
+	字段名 字段类型 列级约束，
+	字段名 字段类型 列级约束，
+	字段名 字段类型 列级约束，
+	表级约束
+)
+</code></pre>
+<pre><code class="language-sql">CREATE DATABASE students;
+USE students;
+
+CREATE TABLE stuinfo(
+	id INT PRIMARY KEY,
+	stuName VARCHAR(20) NOT NULL,
+	gender CHAR(1) CHECK (gender='男'||gender='女'),-- 无效
+	seat INT UNIQUE,
+	age INT DEFAULT 18,
+	majorId INT REFERENCES major(id)
+);
+</code></pre>
+<h4 id="表级约束">表级约束</h4>
+<pre><code class="language-sql">CREATE TABLE stuinfo(
+   id INT,
+   stuName VARCHAR(20),
+   gender CHAR(1),
+   seat INT,
+   age INT,
+   majorId INT,
+   
+   CONSTRAINT pk PRIMARY KEY(id),
+   CONSTRAINT uq UNIQUE(seat),
+   CONSTRAINT ck CHECK(gender IN ('男','女')),-- 无效
+   CONSTRAINT fk_stuinfo_major FOREIGN KEY(majorId) REFERENCES major(id)
+);
+</code></pre>
+<h4 id="主键和唯一对比">主键和唯一对比</h4>
+<pre><code class="language-sql">
+primary key and unique
+
+1.主键和唯一都保证唯一性
+
+2.主键一定非空，唯一允许为空
+   unique:保证无法重复插入null值，最多只能插入一个null值
+
+3.是否允许组合 
+primary key ，unique都允许组合
+   primary key(id,stuname) 组合主键，需要两个字段完全一样才被视为一样
+</code></pre>
+<h4 id="添加列级约束">添加列级约束</h4>
+<pre><code class="language-sql">ALTER TABLE stuinfo MODIFY COLUMN stuName VARCHAR(20) NOT NULL;
+
+ALTER TABLE stuinfo MODIFY COLUMN age INT DEFAULT 18;
+
+ALTER TABLE stuinfo MODIFY COLUMN id INT PRIMARY KEY;
+</code></pre>
+<h4 id="添加表级约束">添加表级约束</h4>
+<pre><code class="language-sql">ALTER TABLE stuinfo ADD UNIQUE(seat);
+
+ALTER TABLE stuinfo ADD FOREIGN KEY(majorId) REFERENCES major(id);
+</code></pre>
+<h4 id="删除约束">删除约束</h4>
+<pre><code class="language-sql"># 1
+ALTER TABLE stuinfo MODIFY COLUMN stuName VARCHAR(20);
+
+ALTER TABLE stuinfo MODIFY COLUMN age INT;
+
+# 2
+ALTER TABLE stuinfo DROP INDEX seat;
+</code></pre>
+<h4 id="标识列">标识列</h4>
+<p><code>AUTO_INCREMENT</code>，也称为自增长列</p>
+<p>含义：可以不用手动插入值，系统提供默认的序列值</p>
+<p>1.要求是一个key，一个表中只能最多有一个标识列</p>
+<p>2.标识列的类型：<br>
+<strong>只支持数值型</strong></p>
+<pre><code class="language-sql">CREATE TABLE tab_identity(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	NAME VARCHAR(20)
+);
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[进阶查询]]></title>
         <id>https://quenkar.github.io/post/jin-jie-cha-xun/</id>
@@ -1195,66 +1521,6 @@ public:
     }
 };
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[STL 常见insert()详解]]></title>
-        <id>https://quenkar.github.io/post/stl-chang-jian-insertxiang-jie/</id>
-        <link href="https://quenkar.github.io/post/stl-chang-jian-insertxiang-jie/">
-        </link>
-        <updated>2020-09-24T09:14:31.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="map与set的insert操作">map与set的insert操作</h1>
-<p><code>std::pair&lt;iterator,bool&gt; insert( const value_type&amp; value );</code></p>
-<pre><code>template&lt; class P &gt;
-std::pair&lt;iterator,bool&gt; insert( P&amp;&amp; value );
-</code></pre>
-<p>(C++11 起)<br>
-主要注意一个返回值是由被插入元素（或阻止插入元素）的迭代器和一个bool值（插入成功为true失败则为false）。</p>
-<h1 id="list的insert操作">list的insert操作</h1>
-<p>在pos前插入1个value元素：<br>
-<code>iterator insert( iterator pos, const T&amp; value );</code><br>
-(C++11 前)<br>
-<code>iterator insert( const_iterator pos, const T&amp; value );</code><br>
-(C++11 起)<br>
-在pos前插入count个value元素：<br>
-<code>void insert( iterator pos, size_type count, const T&amp; value );</code><br>
-(C++11 前)<br>
-<code>iterator insert( const_iterator pos, size_type count, const T&amp; value );</code><br>
-(C++11 起)</p>
-<h1 id="vector的insert操作">vector的insert操作</h1>
-<p>同list差不多<br>
-<code>iterator insert( iterator pos, const T&amp; value );</code><br>
-(C++11 前)<br>
-<code>iterator insert( const_iterator pos, const T&amp; value );</code><br>
-(C++11 起)<br>
-<code>void insert( iterator pos, size_type count, const T&amp; value );</code><br>
-(C++11 前)<br>
-<code>iterator insert( const_iterator pos, size_type count, const T&amp; value );</code><br>
-(C++11 起)</p>
-<h1 id="deque的insert操作">deque的insert操作</h1>
-<p><code>iterator insert( iterator pos, const T&amp; value );</code><br>
-(C++11 前)</p>
-<p><code>iterator insert( const_iterator pos, const T&amp; value );</code><br>
-(C++11 起)</p>
-<p><code>void insert( iterator pos, size_type count, const T&amp; value );</code><br>
-(C++11 前)</p>
-<p><code>iterator insert( const_iterator pos, size_type count, const T&amp; value );</code><br>
-(C++11 起)</p>
-<h1 id="string的insert操作">string的insert操作</h1>
-<ol>
-<li>在位置 index 插入 count 个字符 ch 的副本。<br>
-<code>basic_string&amp; insert( size_type index, size_type count, CharT ch );</code></li>
-<li>在位置 index 插入 s 所指向的空终止字符串。字符串的长度由首个空字符，用 Traits::length(s) 确定。<br>
-<code>basic_string&amp; insert( size_type index, const CharT* s );</code></li>
-<li>在位置 index 插入范围 [s, s+count) 中的字符。范围能含有空字符。<br>
-<code>basic_string&amp; insert( size_type index, const CharT* s, size_type count );</code></li>
-<li>在位置 index 插入 string str 。<br>
-<code>basic_string&amp; insert( size_type index, const basic_string&amp; str );</code></li>
-<li>在 pos 所指向的字符前插入字符 ch 。<br>
-<code>iterator insert( iterator pos, CharT ch );</code></li>
-<li>在 pos 所指向的元素（若存在）前插入 count 个字符 ch 的副本。<br>
-<code>insert( iterator pos, size_type count, CharT ch );</code></li>
-</ol>
 ]]></content>
     </entry>
 </feed>
