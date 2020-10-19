@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2020-10-18T11:07:42.503Z</updated>
+    <updated>2020-10-19T14:16:56.555Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -10,6 +10,384 @@
     <logo>https://quenkar.github.io/images/avatar.png</logo>
     <icon>https://quenkar.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, quenkar</rights>
+    <entry>
+        <title type="html"><![CDATA[MySQL-TCL]]></title>
+        <id>https://quenkar.github.io/post/mysql-tcl/</id>
+        <link href="https://quenkar.github.io/post/mysql-tcl/">
+        </link>
+        <updated>2020-10-19T14:13:04.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="数据库事务">数据库事务</h2>
+<h3 id="含义">含义</h3>
+<p>​	通过一组逻辑操作单元（一组DML——sql语句），将数据从一种状态切换到另外一种状态</p>
+<h3 id="特点">特点</h3>
+<p>​	<code>ACID</code><br>
+​	原子性(Atomicity)：要么都执行，要么都回滚<br>
+​	一致性(consistency)：保证数据的状态操作前和操作后保持一致<br>
+​	隔离性(isolation)：多个事务同时操作相同数据库的同一个数据时，一个事务的执行不受另外一个事务的干扰<br>
+​	持久性(durability)：一个事务一旦提交，则数据将持久化到本地，除非其他事务对其进行修改</p>
+<p>相关步骤：</p>
+<pre><code>1、开启事务
+2、编写事务的一组逻辑操作单元（多条sql语句）
+3、提交事务或回滚事务
+</code></pre>
+<h3 id="事务的分类">事务的分类：</h3>
+<p>隐式事务，没有明显的开启和结束事务的标志</p>
+<pre><code class="language-sql">比如
+insert、update、delete语句本身就是一个事务
+</code></pre>
+<p>显式事务，具有明显的开启和结束事务的标志</p>
+<pre><code class="language-sql">1、开启事务
+取消自动提交事务的功能
+
+2、编写事务的一组逻辑操作单元（多条sql语句）
+insert
+update
+delete
+
+3、提交事务或回滚事务
+</code></pre>
+<h3 id="使用到的关键字">使用到的关键字</h3>
+<pre><code class="language-sql">set autocommit=0;
+start transaction;
+commit;
+rollback;
+
+savepoint  断点
+commit to 断点
+rollback to 断点
+</code></pre>
+<h3 id="事务的隔离级别">事务的隔离级别:</h3>
+<p>事务并发问题如何发生？</p>
+<pre><code>当多个事务同时操作同一个数据库的相同数据时
+</code></pre>
+<p>事务的并发问题有哪些？</p>
+<pre><code>脏读：一个事务读取到了另外一个事务未提交的数据
+不可重复读：同一个事务中，多次读取到的数据不一致
+幻读：一个事务读取数据时，另外一个事务进行更新，导致第一个事务读取到了没有更新的数据
+</code></pre>
+<p>如何避免事务的并发问题？</p>
+<pre><code>通过设置事务的隔离级别
+1、READ UNCOMMITTED
+2、READ COMMITTED 可以避免脏读
+3、REPEATABLE READ 可以避免脏读、不可重复读和一部分幻读
+4、SERIALIZABLE可以避免脏读、不可重复读和幻读
+</code></pre>
+<p>设置隔离级别：</p>
+<pre><code>set session|global  transaction isolation level 隔离级别名;
+</code></pre>
+<p>查看隔离级别：</p>
+<pre><code>select @@tx_isolation;
+</code></pre>
+<h2 id="视图">视图</h2>
+<p><strong>含义：理解成一张虚拟的表</strong></p>
+<p>视图和表的区别：</p>
+<pre><code>	            使用方式	占用物理空间
+
+视图	完全相同	    不占用，仅仅保存的是sql逻辑
+
+表	     完全相同	      占用
+</code></pre>
+<p>视图的好处：</p>
+<pre><code>1、sql语句提高重用性，效率高
+2、和表实现了分离，提高了安全性
+</code></pre>
+<h3 id="视图的创建">视图的创建</h3>
+<pre><code class="language-sql">	语法：
+CREATE VIEW  视图名
+AS
+查询语句;
+</code></pre>
+<h3 id="视图的增删改查">视图的增删改查</h3>
+<p>​	1、查看视图的数据 ★<br>
+​</p>
+<pre><code class="language-sql">SELECT * FROM my_v4;
+SELECT * FROM my_v1 WHERE last_name='Partners';
+
+2、插入视图的数据
+INSERT INTO my_v4(last_name,department_id) VALUES('虚竹',90);
+
+3、修改视图的数据
+UPDATE my_v4 SET last_name ='梦姑' WHERE last_name='虚竹';
+</code></pre>
+<p>​	4、删除视图的数据<br>
+​	DELETE FROM my_v4;</p>
+<h3 id="某些视图不能更新">某些视图不能更新</h3>
+<p>​	包含以下关键字的sql语句：分组函数、distinct、group  by、having、union或者union all<br>
+​	常量视图<br>
+​	Select中包含子查询<br>
+​	join<br>
+​	from一个不能更新的视图<br>
+​	where子句的子查询引用了from子句中的表</p>
+<h3 id="视图逻辑的更新">视图逻辑的更新</h3>
+<pre><code class="language-sql">#方式一：
+CREATE OR REPLACE VIEW test_v7	--(个人觉得这个更好）
+AS
+SELECT last_name FROM employees
+WHERE employee_id&gt;100;
+	
+#方式二:
+ALTER VIEW test_v7
+AS
+SELECT employee_id FROM employees;
+</code></pre>
+<p>​</p>
+<pre><code class="language-sql">SELECT * FROM test_v7;
+</code></pre>
+<h3 id="视图的删除">视图的删除</h3>
+<p>​	<code>DROP VIEW test_v1,test_v2,test_v3;</code></p>
+<h3 id="视图结构的查看">视图结构的查看</h3>
+<p>​	<code>DESC test_v7;</code><br>
+<code>​	SHOW CREATE VIEW test_v7;</code></p>
+<h2 id="存储过程">存储过程</h2>
+<p><strong>含义：一组经过预先编译的sql语句的集合</strong><br>
+好处：</p>
+<pre><code>1、提高了sql语句的重用性，减少了开发程序员的压力
+2、提高了效率
+3、减少了传输次数
+</code></pre>
+<h3 id="分类">分类：</h3>
+<pre><code>1、无返回无参
+2、仅仅带in类型，无返回有参
+3、仅仅带out类型，有返回无参
+4、既带in又带out，有返回有参
+5、带inout，有返回有参
+注意：in、out、inout都可以在一个存储过程中带多个
+</code></pre>
+<h3 id="创建存储过程">创建存储过程</h3>
+<h4 id="语法">语法：</h4>
+<pre><code class="language-sql">create procedure 存储过程名(in|out|inout 参数名  参数类型,...)
+begin
+	存储过程体
+
+end
+</code></pre>
+<p>类似于方法：</p>
+<pre><code class="language-sql">修饰符 返回类型 方法名(参数类型 参数名,...){
+
+	方法体;
+}
+</code></pre>
+<h3 id="注意">注意</h3>
+<pre><code class="language-sql">1、需要设置新的结束标记
+delimiter 新的结束标记
+示例：
+delimiter $
+
+CREATE PROCEDURE 存储过程名(IN|OUT|INOUT 参数名  参数类型,...)
+BEGIN
+	sql语句1;
+	sql语句2;
+
+END $
+
+2、存储过程体中可以有多条sql语句，如果仅仅一条sql语句，则可以省略begin end
+
+3、参数前面的符号的意思
+in:该参数只能作为输入 （该参数不能做返回值）
+out：该参数只能作为输出（该参数只能做返回值）
+inout：既能做输入又能做输出
+</code></pre>
+<h3 id="调用存储过程">调用存储过程</h3>
+<p>​	<code>call 存储过程名(实参列表)</code></p>
+<h2 id="函数">函数</h2>
+<h3 id="创建函数">创建函数</h3>
+<p>学过的函数：LENGTH、SUBSTR、CONCAT等</p>
+<h3 id="语法-2">语法：</h3>
+<pre><code>CREATE FUNCTION 函数名(参数名 参数类型,...) RETURNS 返回类型
+BEGIN
+	函数体
+
+END
+</code></pre>
+<h3 id="调用函数">调用函数</h3>
+<p>​	SELECT 函数名（实参列表）</p>
+<h3 id="函数和存储过程的区别">函数和存储过程的区别</h3>
+<pre><code class="language-sql">		关键字		调用语法	返回值			应用场景
+函数		FUNCTION	SELECT 函数()	只能是一个		一般用于查询结果为一个值并返回时，当有返回值而且仅仅一个
+存储过程	PROCEDURE	CALL 存储过程()	可以有0个或多个		一般用于更新
+</code></pre>
+<h2 id="流程控制结构">流程控制结构</h2>
+<h3 id="系统变量">系统变量</h3>
+<h4 id="一-全局变量">一、全局变量</h4>
+<p>作用域：针对于所有会话（连接）有效，但不能跨重启</p>
+<pre><code>查看所有全局变量
+SHOW GLOBAL VARIABLES;
+查看满足条件的部分系统变量
+SHOW GLOBAL VARIABLES LIKE '%char%';
+查看指定的系统变量的值
+SELECT @@global.autocommit;
+为某个系统变量赋值
+SET @@global.autocommit=0;
+SET GLOBAL autocommit=0;
+</code></pre>
+<h4 id="二-会话变量">二、会话变量</h4>
+<p>作用域：针对于当前会话（连接）有效</p>
+<pre><code>查看所有会话变量
+SHOW SESSION VARIABLES;
+查看满足条件的部分会话变量
+SHOW SESSION VARIABLES LIKE '%char%';
+查看指定的会话变量的值
+SELECT @@autocommit;
+SELECT @@session.tx_isolation;
+为某个会话变量赋值
+SET @@session.tx_isolation='read-uncommitted';
+SET SESSION tx_isolation='read-committed';
+</code></pre>
+<h3 id="自定义变量">自定义变量</h3>
+<h4 id="一-用户变量">一、用户变量</h4>
+<p>声明并初始化：</p>
+<pre><code class="language-sql">SET @变量名=值;
+SET @变量名:=值;
+SELECT @变量名:=值;
+</code></pre>
+<p>赋值：</p>
+<pre><code class="language-sql">方式一：一般用于赋简单的值
+SET 变量名=值;
+SET 变量名:=值;
+SELECT 变量名:=值;
+</code></pre>
+<pre><code class="language-sql">方式二：一般用于赋表 中的字段值
+SELECT 字段名或表达式 INTO 变量
+FROM 表;
+</code></pre>
+<p>使用：</p>
+<pre><code class="language-sql">select @变量名;
+</code></pre>
+<h4 id="二-局部变量">二、局部变量</h4>
+<p>声明：</p>
+<pre><code class="language-sql">declare 变量名 类型 【default 值】;
+</code></pre>
+<p>赋值：</p>
+<pre><code class="language-sql">方式一：一般用于赋简单的值
+SET 变量名=值;
+SET 变量名:=值;
+SELECT 变量名:=值;
+</code></pre>
+<pre><code class="language-sql">方式二：一般用于赋表 中的字段值
+SELECT 字段名或表达式 INTO 变量
+FROM 表;
+</code></pre>
+<p>使用：</p>
+<pre><code class="language-sql">select 变量名
+</code></pre>
+<h4 id="二者的区别">二者的区别：</h4>
+<pre><code class="language-sql">		作用域			定义位置		语法
+用户变量	当前会话		会话的任何地方		加@符号，不用指定类型
+局部变量	定义它的BEGIN END中 	BEGIN END的第一句话	一般不用加@,需要指定类型
+</code></pre>
+<h3 id="分支">分支</h3>
+<h4 id="一-if函数">一、if函数</h4>
+<p>​	语法：if(条件，值1，值2)<br>
+​	特点：<strong>可以用在任何位置</strong></p>
+<pre><code class="language-sql">CREATE FUNCTION test_if(score INT) RETURNS CHAR
+BEGIN
+    IF score &gt;= 90 AND score &lt;= 100 THEN
+        RETURN 'A';
+    ELSEIF score &gt;= 80 THEN
+        RETURN 'B';
+    ELSE
+        RETURN 'D';
+    END IF;
+END $
+SELECT test_if(90) $
+</code></pre>
+<h4 id="二-case语句">二、case语句</h4>
+<p>语法：</p>
+<pre><code>情况一：类似于switch
+case 表达式
+when 值1 then 结果1或语句1(如果是语句，需要加分号) 
+when 值2 then 结果2或语句2(如果是语句，需要加分号)
+...
+else 结果n或语句n(如果是语句，需要加分号)
+end 【case】（如果是放在begin end中需要加上case，如果放在select后面不需要）
+
+情况二：类似于多重if
+case 
+when 条件1 then 结果1或语句1(如果是语句，需要加分号) 
+when 条件2 then 结果2或语句2(如果是语句，需要加分号)
+...
+else 结果n或语句n(如果是语句，需要加分号)
+end 【case】（如果是放在begin end中需要加上case，如果放在select后面不需要）
+</code></pre>
+<p>特点：<br>
+<strong>可以用在任何位置</strong></p>
+<pre><code class="language-sql">CREATE PROCEDURE myp1(IN score INT)
+BEGIN
+    CASE
+        WHEN score &gt;= 90 AND score &lt;= 100 THEN SELECT 'A';
+        WHEN score &gt;= 80 THEN SELECT 'B';
+        WHEN score &gt;= 60 THEN SELECT 'C';
+        ELSE SELECT 'D';
+        END CASE;
+END $
+</code></pre>
+<h4 id="三-if-elseif语句">三、if elseif语句</h4>
+<p>语法：</p>
+<pre><code>if 情况1 then 语句1;
+elseif 情况2 then 语句2;
+...
+else 语句n;
+end if;
+</code></pre>
+<p>特点：<br>
+<strong>只能用在begin end中！</strong></p>
+<pre><code class="language-sql">CREATE FUNCTION test_if(score INT) RETURNS CHAR
+BEGIN
+    IF score &gt;= 90 AND score &lt;= 100 THEN
+        RETURN 'A';
+    ELSEIF score &gt;= 80 THEN
+        RETURN 'B';
+    ELSE
+        RETURN 'D';
+    END IF;
+END $
+SELECT test_if(90) $
+</code></pre>
+<h4 id="三者比较">三者比较：</h4>
+<p>​			应用场合<br>
+​	if函数		简单双分支<br>
+​	case结构	等值判断 的多分支<br>
+​	if结构		区间判断 的多分支</p>
+<h4 id="四-循环">四、循环</h4>
+<p>语法：</p>
+<pre><code class="language-sql">【标签：】WHILE 循环条件  DO
+	循环体
+END WHILE 【标签】;
+</code></pre>
+<p>特点：</p>
+<pre><code class="language-sql">只能放在BEGIN END里面
+
+如果要搭配leave跳转语句，需要使用标签，否则可以不用标签
+
+leave类似于java中的break语句，跳出所在循环！！！
+</code></pre>
+<pre><code class="language-sql">CREATE PROCEDURE pro_while1(IN insertCount INT)
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    WHILE i &lt;= insertCount
+        DO
+            INSERT INTO admin(username, `password`) VALUES (CONCAT('Rose', i), '666');
+            SET i = i + 1;
+        END WHILE;
+END $
+
+# 使用leave
+CREATE PROCEDURE pro_while2(IN insertCount INT)
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    a:
+    WHILE i &lt;= insertCount
+        DO
+            INSERT INTO admin(username, `password`) VALUES (CONCAT('xiaohu', i), '777');
+            IF i &gt; 20 THEN
+                LEAVE a;
+            END IF; -- 这个条件不要忘了
+            SET i = i + 1;
+        END WHILE a;
+END $
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[MySQL-DML]]></title>
         <id>https://quenkar.github.io/post/mysql-dml/</id>
@@ -1450,72 +1828,6 @@ public:
 		}
 		return true;
 	}
-};
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[547. 朋友圈/并查集]]></title>
-        <id>https://quenkar.github.io/post/547-peng-you-quan-bing-cha-ji/</id>
-        <link href="https://quenkar.github.io/post/547-peng-you-quan-bing-cha-ji/">
-        </link>
-        <updated>2020-09-24T09:18:29.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="题目">题目</h1>
-<p>班上有 N 名学生。其中有些人是朋友，有些则不是。他们的友谊具有是传递性。如果已知 A 是 B 的朋友，B 是 C 的朋友，那么我们可以认为 A 也是 C 的朋友。所谓的朋友圈，是指所有朋友的集合。</p>
-<p>给定一个 N * N 的矩阵 M，表示班级中学生之间的朋友关系。如果M[i][j] = 1，表示已知第 i 个和 j 个学生互为朋友关系，否则为不知道。你必须输出所有学生中的已知的朋友圈总数。</p>
-<p>示例 1：<br>
-输入：<br>
-[[1,1,0],<br>
-[1,1,0],<br>
-[0,0,1]]<br>
-输出：2<br>
-解释：已知学生 0 和学生 1 互为朋友，他们在一个朋友圈。<br>
-第2个学生自己在一个朋友圈。所以返回 2 。</p>
-<p>示例 2：<br>
-输入：<br>
-[[1,1,0],<br>
-[1,1,1],<br>
-[0,1,1]]<br>
-输出：1<br>
-解释：已知学生 0 和学生 1 互为朋友，学生 1 和学生 2 互为朋友，所以学生 0 和学生 2 也是朋友，所以他们三个在一个朋友圈，返回 1 。<br>
- <br>
-提示：<br>
-1 &lt;= N &lt;= 200<br>
-M[i][i] == 1<br>
-M[i][j] == M[j][i]</p>
-<h1 id="题解">题解</h1>
-<pre><code class="language-c++">class Solution {
-public:
-    int find(vector&lt;int&gt; &amp;Vec,int n){
-        if(Vec[n]==-1)
-            return n;
-        return find(Vec,Vec[n]);
-    }
-    //将m节点连接到n上
-    void Union(vector&lt;int&gt; &amp;Vec,int m,int n){
-        int parent_m=find(Vec,m);
-        int parent_n=find(Vec,n);
-        if(parent_m!=parent_n)
-            Vec[parent_m]=parent_n;
-    }
-
-    int findCircleNum(vector&lt;vector&lt;int&gt;&gt;&amp; M) {
-        int n=M.size();
-        int res=0;
-        vector&lt;int&gt; union_set(n,-1);
-        for(int i=0;i&lt;n;i++)
-        {
-            for(int j=0;j&lt;i;j++)
-            {
-                if(M[i][j]==1)
-                Union(union_set,j,i);
-            }
-        }
-        for(int i=0;i&lt;n;i++)
-            if(union_set[i]==-1)
-                res++;
-        return res;
-    }
 };
 </code></pre>
 ]]></content>
