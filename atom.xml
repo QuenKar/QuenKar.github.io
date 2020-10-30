@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2020-10-19T14:16:56.555Z</updated>
+    <updated>2020-10-30T04:50:35.054Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -10,6 +10,37 @@
     <logo>https://quenkar.github.io/images/avatar.png</logo>
     <icon>https://quenkar.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, quenkar</rights>
+    <entry>
+        <title type="html"><![CDATA[Maven静态资源加载问题]]></title>
+        <id>https://quenkar.github.io/post/maven-jing-tai-zi-yuan-jia-zai-wen-ti/</id>
+        <link href="https://quenkar.github.io/post/maven-jing-tai-zi-yuan-jia-zai-wen-ti/">
+        </link>
+        <updated>2020-10-30T04:49:05.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>使用Maven创建的JavaWeb项目时可能会遇到静态资源加载问题，解决方案如下：</strong></p>
+<p>在<code>pom.xml</code>文件中加入如下代码</p>
+<pre><code class="language-xml">&lt;build&gt;
+    &lt;resources&gt;
+        &lt;resource&gt;
+            &lt;directory&gt;src/main/java&lt;/directory&gt;
+            &lt;includes&gt;
+                &lt;include&gt;**/*.properties&lt;/include&gt;
+                &lt;include&gt;**/*.xml&lt;/include&gt;
+            &lt;/includes&gt;
+            &lt;filtering&gt;false&lt;/filtering&gt;
+        &lt;/resource&gt;
+        &lt;resource&gt;
+            &lt;directory&gt;src/main/resources&lt;/directory&gt;
+            &lt;includes&gt;
+                &lt;include&gt;**/*.properties&lt;/include&gt;
+                &lt;include&gt;**/*.xml&lt;/include&gt;
+            &lt;/includes&gt;
+            &lt;filtering&gt;false&lt;/filtering&gt;
+        &lt;/resource&gt;
+    &lt;/resources&gt;
+&lt;/build&gt;
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[MySQL-TCL]]></title>
         <id>https://quenkar.github.io/post/mysql-tcl/</id>
@@ -1769,67 +1800,6 @@ sudo apt-get install libssl-dev
 <p>嵌套括号彩色显示，可以更好的区分代码块<br>
 <img src="https://quenkar.github.io/post-images/1601209134103.png" alt="" loading="lazy"></p>
 <p>以上就是我使用的一些插件，over</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[208/实现前缀树（字典树）]]></title>
-        <id>https://quenkar.github.io/post/208shi-xian-qian-zhui-shu-zi-dian-shu/</id>
-        <link href="https://quenkar.github.io/post/208shi-xian-qian-zhui-shu-zi-dian-shu/">
-        </link>
-        <updated>2020-09-25T06:13:48.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="题目">题目</h1>
-<p>实现一个 Trie (前缀树)，包含 insert, search, 和 startsWith 这三个操作。<br>
-示例:</p>
-<pre><code class="language-c++">Trie trie = new Trie();
-trie.insert(&quot;apple&quot;); 
-trie.search(&quot;apple&quot;); // 返回 true 
-trie.search(&quot;app&quot;); // 返回 false
-trie.startsWith(&quot;app&quot;); // 返回 true 
-trie.insert(&quot;app&quot;);
-trie.search(&quot;app&quot;);// 返回 true 
-</code></pre>
-<p>说明:你可以假设所有的输入都是由小写字母 a-z 构成的。 保证所有输入均为非空字符串。</p>
-<pre><code class="language-c++">class Trie
-{
-private:
-	bool is_string = false;
-	Trie* next[26] = { nullptr };
-public:
-	Trie()
-    {
-    }
-
-	void insert(const string&amp; word)//插入单词
-	{
-		Trie* root = this;
-		for (const auto&amp; w : word) {
-			if (root-&gt;next[w - 'a'] == nullptr)root-&gt;next[w - 'a'] = new Trie();
-			root = root-&gt;next[w - 'a'];
-		}
-		root-&gt;is_string = true;
-	}
-
-	bool search(const string&amp; word)//查找单词
-	{
-		Trie* root = this;
-		for (const auto&amp; w : word) {
-			if (root-&gt;next[w - 'a'] == nullptr)return false;
-			root = root-&gt;next[w - 'a'];
-		}
-		return root-&gt;is_string;
-	}
-
-	bool startsWith(const string&amp; prefix)//查找前缀
-	{
-		Trie* root = this;
-		for (const auto&amp; p : prefix) {
-			if (root-&gt;next[p - 'a'] == nullptr)return false;
-			root = root-&gt;next[p - 'a'];
-		}
-		return true;
-	}
-};
-</code></pre>
 ]]></content>
     </entry>
 </feed>
