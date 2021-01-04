@@ -2,11 +2,11 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ZSH+oh-my-zsh配置 | quenkar</title>
+<title>Vue常用命令 | quenkar</title>
 <link rel="shortcut icon" href="https://quenkar.github.io/favicon.ico?v=1609764197878">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://quenkar.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="ZSH+oh-my-zsh配置 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Vue常用命令 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -20,15 +20,14 @@
 </script>
 
 
-    <meta name="description" content="环境：deepin（Ubuntu也通用）
-1.安装zsh
-sudo apt-get install zsh
-2.切换bash为zsh
-chsh -s /bin/zsh
-如果要切回bash就：
-chsh -s /bin/bash
-3.安装oh..." />
-    <meta name="keywords" content="环境配置" />
+    <meta name="description" content="淘宝镜像
+--registry=https://registry.npm.taobao.org
+vue-cli
+下载vue-cli
+npm install -g vue-cli
+删除vue-cli
+npm uninstall vue-cli..." />
+    <meta name="keywords" content="Vue" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -90,47 +89,70 @@ chsh -s /bin/bash
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              ZSH+oh-my-zsh配置
+              Vue常用命令
             </h2>
             <div class="post-info">
               <span>
-                2020-09-24
+                2021-01-04
               </span>
               <span>
                 1 min read
               </span>
               
-                <a href="https://quenkar.github.io/tag/C_ReWnoEK/" class="post-tag">
-                  # 环境配置
+                <a href="https://quenkar.github.io/tag/oS1nJJi7q/" class="post-tag">
+                  # Vue
                 </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://quenkar.github.io/post-images/zshoh-my-zsh-pei-zhi.png" alt="">
+              <img class="post-feature-image" src="https://quenkar.github.io/post-images/vue-chang-yong-ming-ling.jpg" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>环境：deepin（Ubuntu也通用）<br>
-1.安装zsh<br>
-<code>sudo apt-get install zsh</code><br>
-2.切换bash为zsh<br>
-<code>chsh -s /bin/zsh</code><br>
-如果要切回bash就：<br>
-<code>chsh -s /bin/bash</code><br>
-3.安装oh-my-zsh<br>
-从GitHub上面拉取下来，放在~/.oh-my-zsh目录下<br>
-<code>git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh</code><br>
-备份已有的zshrc, 替换zshrc<br>
-<code>cp ~/.zshrc ~/.zshrc.orig</code><br>
-<code>cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</code><br>
-配置主题：<br>
-<code>vim ~/.zshrc</code><br>
-推荐ys这个主题：<br>
-<code>ZSH_THEME=&quot;ys&quot;</code></p>
+                <h2 id="淘宝镜像">淘宝镜像</h2>
+<p><code>--registry=https://registry.npm.taobao.org</code></p>
+<h2 id="vue-cli">vue-cli</h2>
+<h3 id="下载vue-cli">下载vue-cli</h3>
+<p><code>npm install -g vue-cli</code></p>
+<h3 id="删除vue-cli"><strong>删除vue-cli</strong></h3>
+<p><code>npm uninstall vue-cli -g</code></p>
+<h2 id="vuecli">@vue/cli</h2>
+<p><code>npm install -g @vue/cli</code></p>
+<h2 id="安装相关组件">安装相关组件</h2>
+<h3 id="vue-router">vue-router</h3>
+<p><code>npm install vue-router</code></p>
+<h3 id="vuex">vuex</h3>
+<p><code>npm install vuex --save</code></p>
+<h3 id="axios">axios</h3>
+<p><code>npm install axios --save-dev</code></p>
+<h3 id="element-ui">Element-ui</h3>
+<p><code>npm i element-ui -S</code></p>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%B7%98%E5%AE%9D%E9%95%9C%E5%83%8F">淘宝镜像</a></li>
+<li><a href="#vue-cli">vue-cli</a>
+<ul>
+<li><a href="#%E4%B8%8B%E8%BD%BDvue-cli">下载vue-cli</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4vue-cli"><strong>删除vue-cli</strong></a></li>
+</ul>
+</li>
+<li><a href="#vuecli">@vue/cli</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85%E7%9B%B8%E5%85%B3%E7%BB%84%E4%BB%B6">安装相关组件</a>
+<ul>
+<li><a href="#vue-router">vue-router</a></li>
+<li><a href="#vuex">vuex</a></li>
+<li><a href="#axios">axios</a></li>
+<li><a href="#element-ui">Element-ui</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
@@ -139,9 +161,9 @@ chsh -s /bin/bash
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://quenkar.github.io/post/152cheng-ji-zui-da-zi-xu-lie/">
+            <a href="https://quenkar.github.io/post/maven-jing-tai-zi-yuan-jia-zai-wen-ti/">
               <h3 class="post-title">
-                152/乘积最大子序列
+                Maven静态资源加载问题
               </h3>
             </a>
           </div>
