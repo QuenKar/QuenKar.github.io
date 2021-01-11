@@ -2,11 +2,11 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>547. 朋友圈/并查集 | quenkar</title>
+<title>Win10禁用笔记本自带键盘 | quenkar</title>
 <link rel="shortcut icon" href="https://quenkar.github.io/favicon.ico?v=1610348274918">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://quenkar.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="547. 朋友圈/并查集 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Win10禁用笔记本自带键盘 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -20,10 +20,14 @@
 </script>
 
 
-    <meta name="description" content="题目
-班上有 N 名学生。其中有些人是朋友，有些则不是。他们的友谊具有是传递性。如果已知 A 是 B 的朋友，B 是 C 的朋友，那么我们可以认为 A 也是 C 的朋友。所谓的朋友圈，是指所有朋友的集合。
-给定一个 N * N 的矩阵 M，..." />
-    <meta name="keywords" content="leetcode" />
+    <meta name="description" content="管理员模式下启动cmd，注意不是powershell🤣
+输入：
+sc config i8042prt start= disabled
+然后重启电脑就OK了😄
+假如要恢复自带键盘
+输入：
+sc config i8042prt start=..." />
+    <meta name="keywords" content="tips" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -85,92 +89,38 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              547. 朋友圈/并查集
+              Win10禁用笔记本自带键盘
             </h2>
             <div class="post-info">
               <span>
-                2020-09-24
+                2021-01-11
               </span>
               <span>
-                2 min read
+                1 min read
               </span>
               
-                <a href="https://quenkar.github.io/tag/BC76y0qv1/" class="post-tag">
-                  # leetcode
+                <a href="https://quenkar.github.io/tag/CvcgqH9aU/" class="post-tag">
+                  # tips
                 </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://quenkar.github.io/post-images/547-peng-you-quan-bing-cha-ji.jpg" alt="">
+              <img class="post-feature-image" src="https://quenkar.github.io/post-images/win10-jin-yong-bi-ji-ben-zi-dai-jian-pan.jpg" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h1 id="题目">题目</h1>
-<p>班上有 N 名学生。其中有些人是朋友，有些则不是。他们的友谊具有是传递性。如果已知 A 是 B 的朋友，B 是 C 的朋友，那么我们可以认为 A 也是 C 的朋友。所谓的朋友圈，是指所有朋友的集合。</p>
-<p>给定一个 N * N 的矩阵 M，表示班级中学生之间的朋友关系。如果M[i][j] = 1，表示已知第 i 个和 j 个学生互为朋友关系，否则为不知道。你必须输出所有学生中的已知的朋友圈总数。</p>
-<p>示例 1：<br>
+                <p>管理员模式下启动cmd，注意不是powershell🤣</p>
+<p>输入：<br>
+<code>sc config i8042prt start= disabled</code><br>
+然后重启电脑就OK了😄</p>
+<p>假如要恢复自带键盘<br>
 输入：<br>
-[[1,1,0],<br>
-[1,1,0],<br>
-[0,0,1]]<br>
-输出：2<br>
-解释：已知学生 0 和学生 1 互为朋友，他们在一个朋友圈。<br>
-第2个学生自己在一个朋友圈。所以返回 2 。</p>
-<p>示例 2：<br>
-输入：<br>
-[[1,1,0],<br>
-[1,1,1],<br>
-[0,1,1]]<br>
-输出：1<br>
-解释：已知学生 0 和学生 1 互为朋友，学生 1 和学生 2 互为朋友，所以学生 0 和学生 2 也是朋友，所以他们三个在一个朋友圈，返回 1 。<br>
- <br>
-提示：<br>
-1 &lt;= N &lt;= 200<br>
-M[i][i] == 1<br>
-M[i][j] == M[j][i]</p>
-<h1 id="题解">题解</h1>
-<pre><code class="language-c++">class Solution {
-public:
-    int find(vector&lt;int&gt; &amp;Vec,int n){
-        if(Vec[n]==-1)
-            return n;
-        return find(Vec,Vec[n]);
-    }
-    //将m节点连接到n上
-    void Union(vector&lt;int&gt; &amp;Vec,int m,int n){
-        int parent_m=find(Vec,m);
-        int parent_n=find(Vec,n);
-        if(parent_m!=parent_n)
-            Vec[parent_m]=parent_n;
-    }
-
-    int findCircleNum(vector&lt;vector&lt;int&gt;&gt;&amp; M) {
-        int n=M.size();
-        int res=0;
-        vector&lt;int&gt; union_set(n,-1);
-        for(int i=0;i&lt;n;i++)
-        {
-            for(int j=0;j&lt;i;j++)
-            {
-                if(M[i][j]==1)
-                Union(union_set,j,i);
-            }
-        }
-        for(int i=0;i&lt;n;i++)
-            if(union_set[i]==-1)
-                res++;
-        return res;
-    }
-};
-</code></pre>
+<code>sc config i8042prt start= demand</code><br>
+重启</p>
 
               </div>
               <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li><a href="#%E9%A2%98%E7%9B%AE">题目</a></li>
-<li><a href="#%E9%A2%98%E8%A7%A3">题解</a></li>
-</ul>
-
+                
               </div>
             </div>
           </article>
@@ -179,9 +129,9 @@ public:
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://quenkar.github.io/post/stl-chang-jian-insertxiang-jie/">
+            <a href="https://quenkar.github.io/post/vue-chang-yong-ming-ling/">
               <h3 class="post-title">
-                STL 常见insert()详解
+                Vue常用命令
               </h3>
             </a>
           </div>

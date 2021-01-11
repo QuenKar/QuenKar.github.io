@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2021-01-05T11:01:21.036Z</updated>
+    <updated>2021-01-11T06:57:58.768Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -10,6 +10,22 @@
     <logo>https://quenkar.github.io/images/avatar.png</logo>
     <icon>https://quenkar.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, quenkar</rights>
+    <entry>
+        <title type="html"><![CDATA[Win10禁用笔记本自带键盘]]></title>
+        <id>https://quenkar.github.io/post/win10-jin-yong-bi-ji-ben-zi-dai-jian-pan/</id>
+        <link href="https://quenkar.github.io/post/win10-jin-yong-bi-ji-ben-zi-dai-jian-pan/">
+        </link>
+        <updated>2021-01-11T06:54:21.000Z</updated>
+        <content type="html"><![CDATA[<p>管理员模式下启动cmd，注意不是powershell🤣</p>
+<p>输入：<br>
+<code>sc config i8042prt start= disabled</code><br>
+然后重启电脑就OK了😄</p>
+<p>假如要恢复自带键盘<br>
+输入：<br>
+<code>sc config i8042prt start= demand</code><br>
+重启</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Vue常用命令]]></title>
         <id>https://quenkar.github.io/post/vue-chang-yong-ming-ling/</id>
@@ -1747,51 +1763,6 @@ where<br>
 <p><strong>只会显示0</strong></p>
 <h4 id="显示表的字段"># 显示表的字段</h4>
 <p><code>DESC departments;</code></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Nginx安装]]></title>
-        <id>https://quenkar.github.io/post/nginx-pei-zhi/</id>
-        <link href="https://quenkar.github.io/post/nginx-pei-zhi/">
-        </link>
-        <updated>2020-10-01T13:48:42.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>环境：Ubuntu 18.04</strong></p>
-<p><strong>权限：root</strong></p>
-<h3 id="1安装pcre-837targz">1.安装pcre-8.37.tar.gz</h3>
-<p><a href="https://ftp.pcre.org/pub/pcre/">https://ftp.pcre.org/pub/pcre/</a></p>
-<p>解压 <code>tar -xvf pcre-8.37.tar.gz</code></p>
-<p>进入pcre-8.37执行</p>
-<p><code>./configure</code></p>
-<p>然后再执行</p>
-<p><code>make &amp;&amp; make install</code></p>
-<p><strong>至少要在sudo权限下执行，否则就会Permission denied</strong><br>
-<img src="https://quenkar.github.io/post-images/1601560193664.png" alt="" loading="lazy"></p>
-<p>执行<code>pcre-config --version</code>查看版本</p>
-<pre><code class="language-bash">$ pcre-config --version
-8.39
-</code></pre>
-<h3 id="2安装nginx">2.安装Nginx</h3>
-<p>前置条件安装</p>
-<pre><code class="language-bash">sudo apt-get install zlib1g
-
-sudo apt-get install zlib1g.dev
-
-sudo apt-get install openssl
-
-sudo apt-get install libssl-dev
-</code></pre>
-<p>官网下载nginx</p>
-<p>http://nginx.org/en/download.html</p>
-<p>以nginx-1.12.2版本演示<a href="http://nginx.org/download/nginx-1.12.2.tar.gz"> nginx-1.12.2</a></p>
-<p>解压<code>tar -xvf nginx-1.12.2.tar.gz</code></p>
-<p>进入解压后的目录，执行<code>./configure</code></p>
-<p>权限要为<strong>root</strong>，用sudo执行照样权限不够</p>
-<figure data-type="image" tabindex="1"><img src="https://quenkar.github.io/post-images/1601560218025.png" alt="" loading="lazy"></figure>
-<p><strong>root权限</strong>下再执行<code>make &amp;&amp; make install</code></p>
-<p>进入 <code>/usr/local/nginx/sbin</code> 执行<code>sudo ./nginx</code>启动nginx</p>
-<p>到这里就算安装完成了</p>
-<p>再配置一下系统防火墙，设置一下对外的端口号就可以访问了😋</p>
-<figure data-type="image" tabindex="2"><img src="https://quenkar.github.io/post-images/1601560229643.png" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
 </feed>
