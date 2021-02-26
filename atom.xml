@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2021-01-11T06:57:58.768Z</updated>
+    <updated>2021-02-26T01:52:19.090Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -10,6 +10,50 @@
     <logo>https://quenkar.github.io/images/avatar.png</logo>
     <icon>https://quenkar.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, quenkar</rights>
+    <entry>
+        <title type="html"><![CDATA[c++11-单例模式]]></title>
+        <id>https://quenkar.github.io/post/c11-dan-li-mo-shi/</id>
+        <link href="https://quenkar.github.io/post/c11-dan-li-mo-shi/">
+        </link>
+        <updated>2021-02-26T01:41:23.000Z</updated>
+        <content type="html"><![CDATA[<p>C++11规定了local static在多线程条件下的初始化行为，要求<strong>编译器保证了内部静态变量的线程安全性</strong>。在C++11标准下，《Effective C++》提出了一种更优雅的单例模式实现，使用函数内的 local static 对象。这样，只有当第一次访问getInstance()方法时才创建实例。</p>
+<h2 id="懒汉版-the-best-implement">懒汉版（ The best implement）</h2>
+<pre><code class="language-c++">class Singleton
+{
+private:
+
+  Singleton() { };
+  ~Singleton() { };
+
+public:
+  static Singleton&amp; getInstance() 
+  {
+    static Singleton instance;
+    return instance;
+  }
+};
+</code></pre>
+<h2 id="饿汉版">饿汉版</h2>
+<pre><code class="language-c++">class Singleton
+{
+private:
+  static Singleton instance;
+private:
+  Singleton();
+  ~Singleton();
+
+public:
+  static Singleton&amp; getInstance() {
+    return instance;
+  }
+}
+
+Singleton Singleton::instance;
+</code></pre>
+<p>饿汉版会存在一些问题，因为无法确定<code>static Singleton instance</code>和<code>getInstance</code>的编译顺序</p>
+<p>如果在初始化未完成之前调用<code>getInstance</code>会返回未定义实例，不过一般也不会出现这种问题吧...</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Win10禁用笔记本自带键盘]]></title>
         <id>https://quenkar.github.io/post/win10-jin-yong-bi-ji-ben-zi-dai-jian-pan/</id>
@@ -1709,60 +1753,6 @@ where<br>
  ORDER BY LENGTH(email) DESC,
   department_id ;
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[MySQL-基础]]></title>
-        <id>https://quenkar.github.io/post/mysql-ji-chu/</id>
-        <link href="https://quenkar.github.io/post/mysql-ji-chu/">
-        </link>
-        <updated>2020-10-03T14:02:25.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="基础关键字">基础关键字</h2>
-<p><strong>SELECT</strong> <strong>FROM</strong></p>
-<h4 id="查询一个字段"># 查询一个字段</h4>
-<pre><code class="language-sql"> SELECT 
-  last_name 
- FROM
-  employees ;
-</code></pre>
-<h4 id="查询多个字段"># 查询多个字段</h4>
-<pre><code class="language-sql"> SELECT 
-  last_name,
-  salary,
-  email 
- FROM
-  employees ;
-</code></pre>
-<h4 id="查询所有字段"># 查询所有字段</h4>
-<pre><code class="language-sql"> SELECT 
-   * 
- FROM
-  employees ;
-</code></pre>
-<h4 id="查询常量值"># 查询常量值</h4>
-<p><code>SELECT 100;</code></p>
-<p><code>SELECT 'john';</code></p>
-<h4 id="查询表达式"># 查询表达式</h4>
-<p><code>SELECT 100*4398;</code></p>
-<h4 id="查询函数"># 查询函数</h4>
-<p><code>SELECT VERSION() ;</code></p>
-<h4 id="起别名"># 起别名</h4>
-<p><code>SELECT 100%98 AS result;</code></p>
-<p><code>SELECT last_name 姓,first_name 名 FROM employees;</code></p>
-<p><code>SELECT salary AS &quot;out put&quot; FROM employees;</code></p>
-<h4 id="去重"># 去重</h4>
-<p><code>SELECT DISTINCT department_id FROM employees;</code></p>
-<h4 id="mysql中的号">#  mysql中的+号</h4>
-<p><strong>只有运算符的作用，不会像java或者c++一样可以直接拼接字符串</strong></p>
-<pre><code class="language-sql"> select 100+50;
- select '123'+79;# 试图将字符串转为数字型，转换成功继续做加法
- select 'john'+40;# 假如转换失败，则字符型转换成0
- select null+10;# 只要有一方为null，结果就是null
-</code></pre>
-<p><code>SELECT last_name + first_name AS 姓名 FROM employees ;</code></p>
-<p><strong>只会显示0</strong></p>
-<h4 id="显示表的字段"># 显示表的字段</h4>
-<p><code>DESC departments;</code></p>
 ]]></content>
     </entry>
 </feed>

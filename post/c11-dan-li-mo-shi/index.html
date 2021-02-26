@@ -2,11 +2,11 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Win10禁用笔记本自带键盘 | quenkar</title>
+<title>c++11-单例模式 | quenkar</title>
 <link rel="shortcut icon" href="https://quenkar.github.io/favicon.ico?v=1614304335479">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://quenkar.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Win10禁用笔记本自带键盘 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="c++11-单例模式 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -20,14 +20,8 @@
 </script>
 
 
-    <meta name="description" content="管理员模式下启动cmd，注意不是powershell🤣
-输入：
-sc config i8042prt start= disabled
-然后重启电脑就OK了😄
-假如要恢复自带键盘
-输入：
-sc config i8042prt start=..." />
-    <meta name="keywords" content="tips" />
+    <meta name="description" content="C++11规定了local static在多线程条件下的初始化行为，要求编译器保证了内部静态变量的线程安全性。在C++11标准下，《Effective C++》提出了一种更优雅的单例模式实现，使用函数内的 local static 对象。这..." />
+    <meta name="keywords" content="c++" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -89,38 +83,74 @@ sc config i8042prt start=..." />
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Win10禁用笔记本自带键盘
+              c++11-单例模式
             </h2>
             <div class="post-info">
               <span>
-                2021-01-11
+                2021-02-26
               </span>
               <span>
                 1 min read
               </span>
               
-                <a href="https://quenkar.github.io/tag/CvcgqH9aU/" class="post-tag">
-                  # tips
+                <a href="https://quenkar.github.io/tag/QhsFU77k0/" class="post-tag">
+                  # c++
                 </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://quenkar.github.io/post-images/win10-jin-yong-bi-ji-ben-zi-dai-jian-pan.jpg" alt="">
+              <img class="post-feature-image" src="https://quenkar.github.io/post-images/c11-dan-li-mo-shi.jpg" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>管理员模式下启动cmd，注意不是powershell🤣</p>
-<p>输入：<br>
-<code>sc config i8042prt start= disabled</code><br>
-然后重启电脑就OK了😄</p>
-<p>假如要恢复自带键盘<br>
-输入：<br>
-<code>sc config i8042prt start= demand</code><br>
-重启</p>
+                <p>C++11规定了local static在多线程条件下的初始化行为，要求<strong>编译器保证了内部静态变量的线程安全性</strong>。在C++11标准下，《Effective C++》提出了一种更优雅的单例模式实现，使用函数内的 local static 对象。这样，只有当第一次访问getInstance()方法时才创建实例。</p>
+<h2 id="懒汉版-the-best-implement">懒汉版（ The best implement）</h2>
+<pre><code class="language-c++">class Singleton
+{
+private:
+
+  Singleton() { };
+  ~Singleton() { };
+
+public:
+  static Singleton&amp; getInstance() 
+  {
+    static Singleton instance;
+    return instance;
+  }
+};
+</code></pre>
+<h2 id="饿汉版">饿汉版</h2>
+<pre><code class="language-c++">class Singleton
+{
+private:
+  static Singleton instance;
+private:
+  Singleton();
+  ~Singleton();
+
+public:
+  static Singleton&amp; getInstance() {
+    return instance;
+  }
+}
+
+Singleton Singleton::instance;
+</code></pre>
+<p>饿汉版会存在一些问题，因为无法确定<code>static Singleton instance</code>和<code>getInstance</code>的编译顺序</p>
+<p>如果在初始化未完成之前调用<code>getInstance</code>会返回未定义实例，不过一般也不会出现这种问题吧...</p>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%87%92%E6%B1%89%E7%89%88-the-best-implement">懒汉版（ The best implement）</a></li>
+<li><a href="#%E9%A5%BF%E6%B1%89%E7%89%88">饿汉版</a></li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
@@ -129,9 +159,9 @@ sc config i8042prt start=..." />
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://quenkar.github.io/post/vue-chang-yong-ming-ling/">
+            <a href="https://quenkar.github.io/post/win10-jin-yong-bi-ji-ben-zi-dai-jian-pan/">
               <h3 class="post-title">
-                Vue常用命令
+                Win10禁用笔记本自带键盘
               </h3>
             </a>
           </div>
