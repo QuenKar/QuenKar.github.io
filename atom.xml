@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2021-03-05T07:20:43.750Z</updated>
+    <updated>2021-03-05T07:21:43.841Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -11,7 +11,7 @@
     <icon>https://quenkar.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, quenkar</rights>
     <entry>
-        <title type="html"><![CDATA[为什么new可以调用私有(private)构造函数而make_shared不能？]]></title>
+        <title type="html"><![CDATA[为什么类内new可以调用私有(private)构造函数而make_shared不能？]]></title>
         <id>https://quenkar.github.io/post/wei-shi-me-new-ke-yi-diao-yong-si-you-privategou-zao-han-shu-er-make_shared-bu-neng/</id>
         <link href="https://quenkar.github.io/post/wei-shi-me-new-ke-yi-diao-yong-si-you-privategou-zao-han-shu-er-make_shared-bu-neng/">
         </link>
