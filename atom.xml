@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2021-02-26T01:52:19.090Z</updated>
+    <updated>2021-03-05T07:20:13.272Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -10,6 +10,38 @@
     <logo>https://quenkar.github.io/images/avatar.png</logo>
     <icon>https://quenkar.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, quenkar</rights>
+    <entry>
+        <title type="html"><![CDATA[为什么new可以调用私有(private)构造函数而make_shared不能？]]></title>
+        <id>https://quenkar.github.io/post/wei-shi-me-new-ke-yi-diao-yong-si-you-privategou-zao-han-shu-er-make_shared-bu-neng/</id>
+        <link href="https://quenkar.github.io/post/wei-shi-me-new-ke-yi-diao-yong-si-you-privategou-zao-han-shu-er-make_shared-bu-neng/">
+        </link>
+        <updated>2021-03-05T07:18:14.000Z</updated>
+        <content type="html"><![CDATA[<p>为什么new可以调用私有(private)构造函数而make_shared不能？</p>
+<pre><code class="language-c++">class A{
+    public:
+        auto getInstance(){
+            //error;
+            // return std::make_shared&lt;A&gt;();
+            //right; 
+            return std::shared_ptr&lt;A&gt;(new A);
+        }
+    private:
+        A(){}
+}
+</code></pre>
+<p>首先一个类把构造函数私有化，则只能通过类本身内部的静态工厂方法获取类的实例。</p>
+<p>cppreference提到make_shared：</p>
+<p>此函数可用作 std::shared_ptr<T>(new T(args...)) 的替代品。得失是：</p>
+<ul>
+<li>std::shared_ptr<T>(new T(args...)) 进行至少二次分配（一次为 T 而另一次为共享指针的控制块），而 std::make_shared<T> 典型地仅进行一次分配（标准推荐但不要求如此，所有已知实现均如此）。</li>
+<li>若任何 std::weak_ptr 在所有共享拥有者的生存期结束后引用 std::make_shared 所创建的控制块，则 T 所占有的内存维持着，直至所有弱拥有者亦被销毁，若 sizeof(T) 较大则这可能是不想要的。</li>
+<li>std::shared_ptr<T>(new T(args...)) 可能调用 T 的非公开构造函数，若在它可访问的语境中执行，而 std::make_shared 要求对被选择构造函数的公开访问。</li>
+<li>不同于 std::shared_ptr 构造函数， std::make_shared 不允许自定义删除器。</li>
+<li>std::make_shared 使用 ::new ，故若用类特定的 operator new 设置了任何特殊行为，则它将异于 std::shared_ptr<T>(new T(args...)) 。</li>
+</ul>
+<p>总结一下，make_shared使用的是::new，没法在类中调用类的私有构造函数，下次使用make_shared创建类的实例要注意类的构造函数是否为public</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[c++11-单例模式]]></title>
         <id>https://quenkar.github.io/post/c11-dan-li-mo-shi/</id>
@@ -1549,210 +1581,6 @@ max、min、count可以处理任何数据类型<br>
 3、都可以搭配distinct使用，用于统计去重后的结果<br>
 4、count的参数可以支持：<br>
 字段、</em>、常量值（一般放1），<strong>建议使用 count(*)</strong></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[MySQL-查询 ]]></title>
-        <id>https://quenkar.github.io/post/mysql-cha-xun/</id>
-        <link href="https://quenkar.github.io/post/mysql-cha-xun/">
-        </link>
-        <updated>2020-10-04T14:04:01.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="mysql-条件查询">MySQL-条件查询</h2>
-<h4 id="importantwhere">Important：where</h4>
-<p><strong>语法：</strong><br>
-select<br>
-查询列表<br>
-from<br>
-表名<br>
-where<br>
-条件<br>
-<strong>分类：</strong><br>
-1.按条件表达式<br>
-条件运算符： <strong>&gt; &lt; = != &gt;= &lt;=</strong></p>
-<p>2.逻辑表达式<br>
-逻辑运算符：<br>
-<strong>&amp;&amp; || !</strong><br>
-<strong>and or not</strong><br>
-3.模糊查询：<br>
-- <strong>like</strong><br>
-- <strong>between and</strong><br>
-- <strong>in</strong><br>
-- <strong>is null</strong></p>
-<h4 id="按条件表达式"># 按条件表达式</h4>
-<p><code>SELECT * FROM employees WHERE salary&gt;12000;</code></p>
-<pre><code class="language-sql"> SELECT 
-  last_name,
-  department_id 
- FROM
-  employees 
- WHERE department_id != 90 ;
-</code></pre>
-<h4 id="按逻辑表达式"># 按逻辑表达式</h4>
-<pre><code class="language-sql"> SELECT 
-  last_name,
-  salary,
-  commission_pct 
- FROM
-  employees 
- WHERE salary &gt;= 10000 
-  AND salary &lt;= 20000 ;
-
- SELECT 
-  * 
- FROM
-  employees 
- WHERE department_id &lt; 90 || department_id &gt; 110 || salary &gt; 15000 ;
-</code></pre>
-<h4 id="模糊查询"># 模糊查询</h4>
-<h5 id="like">like</h5>
-<p>一般和通配符使用<br>
-<strong>%任意多个字符</strong><br>
-<strong>_任意单个字符</strong></p>
-<pre><code class="language-sql"> SELECT 
-  * 
- FROM
-  employees 
- WHERE last_name LIKE '%a%' ;
-
- SELECT 
-  * 
- FROM
-  employees 
- WHERE last_name LIKE '__n_l%' ;
- # 假如要搜索的字段中包含_或者%时,用转义字符 \
- SELECT * FROM employees WHERE last_name LIKE '_\_%';
- # 自定义转义字符
- SELECT * FROM employees WHERE last_name LIKE '_$_%' ESCAPE '$';
-</code></pre>
-<h5 id="between-and">between and</h5>
-<pre><code class="language-sql"> SELECT 
-  * 
- FROM
-  employees 
- WHERE employee_id BETWEEN 100 AND 120 ;
-</code></pre>
-<p><strong># 包含临界值的，相当于 [100,120]</strong></p>
-<h5 id="in">in</h5>
-<p><strong>值类型要一直或者能相互转化,不支持使用通配符</strong></p>
-<pre><code class="language-sql">SELECT 
-  * 
- FROM
-  employees 
- WHERE job_id IN (
-   'AD_PRES',
-   'IT_PROG',
-   'IT_PROG',
-   'FI_ACCOUNT'
-  );
-</code></pre>
-<h5 id="is-null">is null</h5>
-<p><strong>用is判断null，而不能直接用 = null这种写法，=与!=不能判断null值</strong></p>
-<pre><code class="language-sql"> SELECT 
-  last_name,
-  commission_pct 
- FROM
-  employees 
- WHERE commission_pct IS NULL ;
-</code></pre>
-<h5 id="安全等于">安全等于&lt;=&gt;</h5>
-<pre><code class="language-sql"> SELECT 
-  last_name,
-  commission_pct 
- FROM
-  employees 
- WHERE commission_pct &lt;=&gt; NULL ;
-
-
- SELECT 
-  last_name,
-  salary 
- FROM
-  employees 
- WHERE salary &lt;=&gt; 12000 ;
-</code></pre>
-<h6 id="summary"><strong>summary</strong></h6>
-<p>is null: 仅仅可以判断null值<br>
-&lt;=&gt;  : 既可以判断null值，也可以判断普通的值</p>
-<h5 id="addition">Addition</h5>
-<p><strong>Question：</strong><code>select * from employees;</code>和<code>select * from employees where commission_pct like '%%' and last_name like '%%';</code>结果是否一样？</p>
-<p>**Answer：**不一样，第二个sql语句commission_pct为null的时候没法检索出来，假如没有字段为null，就是一样的。</p>
-<h2 id="mysql-排序查询">MySQL-排序查询</h2>
-<h4 id="order-by-语法">ORDER BY 语法</h4>
-<pre><code class="language-sql"> select 查询列表
- from 表
- [where 条件]
- [order by 排序列表 [asc|desc]
-  
-  # asc : 升序
-  # desc : 降序
-</code></pre>
-<p><code>order by</code> 支持<strong>单个字段，多个字段，表达式，函数</strong><br>
-<strong>一般放在查询语句最后面，除了limit子句</strong></p>
-<h4 id="使用样例">使用样例</h4>
-<pre><code class="language-sql"> # 1
- SELECT 
-  * 
- FROM
-  employees 
- ORDER BY salary ;
-
- # 2
- SELECT 
-  * 
- FROM
-  employees 
- WHERE department_id &gt;= 90 
- ORDER BY hiredate ;
-
- # 3 按表达式排序(支持别名)
- SELECT 
-  *,
-  salary * 12 * (1+ IFNULL(commission_pct, 0)) AS 年薪 
- FROM
-  employees 
- ORDER BY 年薪 DESC ;
-
- # 4 按姓名的长度排序
- SELECT 
-  last_name,
-  salary 
- FROM
-  employees 
- ORDER BY LENGTH(last_name) ;
-
- # 5先按工资排序再按员工编号排序(按多个字段排序)
- SELECT *
- FROM employees
- ORDER BY salary,employee_id DESC;
-
- #test problems
- # 1
- SELECT 
-  last_name,
-  department_id,
-  salary * 12 * (1+ IFNULL(commission_pct, 0)) AS 年薪 
- FROM
-  employees 
- ORDER BY 年薪 DESC,# 年薪不能加''
-  last_name ;
-
- # 2
- SELECT 
-  * 
- FROM
-  employees 
- WHERE salary &lt; 8000 || salary &gt; 17000 
- ORDER BY salary DESC ;
-
- # 3
- SELECT 
-  * 
- FROM
-  employees 
- WHERE email LIKE '%e%' 
- ORDER BY LENGTH(email) DESC,
-  department_id ;
-</code></pre>
 ]]></content>
     </entry>
 </feed>

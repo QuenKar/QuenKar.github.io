@@ -1,0 +1,208 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>为什么new可以调用私有(private)构造函数而make_shared不能？ | quenkar</title>
+<link rel="shortcut icon" href="https://quenkar.github.io/favicon.ico?v=1614928809616">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://quenkar.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="为什么new可以调用私有(private)构造函数而make_shared不能？ | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-179429190-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-179429190-1');
+</script>
+
+
+    <meta name="description" content="为什么new可以调用私有(private)构造函数而make_shared不能？
+class A{
+    public:
+        auto getInstance(){
+            //error;
+         ..." />
+    <meta name="keywords" content="c++" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://quenkar.github.io">
+  <img class="avatar" src="https://quenkar.github.io/images/avatar.png?v=1614928809616" alt="">
+  </a>
+  <h1 class="site-title">
+    quenkar
+  </h1>
+  <p class="site-description">
+    Don't say  "lazy"
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              为什么new可以调用私有(private)构造函数而make_shared不能？
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-03-05
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://quenkar.github.io/tag/QhsFU77k0/" class="post-tag">
+                  # c++
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://quenkar.github.io/post-images/wei-shi-me-new-ke-yi-diao-yong-si-you-privategou-zao-han-shu-er-make_shared-bu-neng.jpg" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>为什么new可以调用私有(private)构造函数而make_shared不能？</p>
+<pre><code class="language-c++">class A{
+    public:
+        auto getInstance(){
+            //error;
+            // return std::make_shared&lt;A&gt;();
+            //right; 
+            return std::shared_ptr&lt;A&gt;(new A);
+        }
+    private:
+        A(){}
+}
+</code></pre>
+<p>首先一个类把构造函数私有化，则只能通过类本身内部的静态工厂方法获取类的实例。</p>
+<p>cppreference提到make_shared：</p>
+<p>此函数可用作 std::shared_ptr<T>(new T(args...)) 的替代品。得失是：</p>
+<ul>
+<li>std::shared_ptr<T>(new T(args...)) 进行至少二次分配（一次为 T 而另一次为共享指针的控制块），而 std::make_shared<T> 典型地仅进行一次分配（标准推荐但不要求如此，所有已知实现均如此）。</li>
+<li>若任何 std::weak_ptr 在所有共享拥有者的生存期结束后引用 std::make_shared 所创建的控制块，则 T 所占有的内存维持着，直至所有弱拥有者亦被销毁，若 sizeof(T) 较大则这可能是不想要的。</li>
+<li>std::shared_ptr<T>(new T(args...)) 可能调用 T 的非公开构造函数，若在它可访问的语境中执行，而 std::make_shared 要求对被选择构造函数的公开访问。</li>
+<li>不同于 std::shared_ptr 构造函数， std::make_shared 不允许自定义删除器。</li>
+<li>std::make_shared 使用 ::new ，故若用类特定的 operator new 设置了任何特殊行为，则它将异于 std::shared_ptr<T>(new T(args...)) 。</li>
+</ul>
+<p>总结一下，make_shared使用的是::new，没法在类中调用类的私有构造函数，下次使用make_shared创建类的实例要注意类的构造函数是否为public</p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://quenkar.github.io/post/c11-dan-li-mo-shi/">
+              <h3 class="post-title">
+                c++11-单例模式
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  <div>Powered by <a href="https://github.com/QuenKar" target="_blank">  Quenkar</a></div>
+  <a class="rss" href="https://quenkar.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
