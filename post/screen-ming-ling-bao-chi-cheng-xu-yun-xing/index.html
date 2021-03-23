@@ -2,11 +2,11 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Maven静态资源加载问题 | quenkar</title>
+<title>screen命令保持程序运行 | quenkar</title>
 <link rel="shortcut icon" href="https://quenkar.github.io/favicon.ico?v=1616502565646">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://quenkar.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Maven静态资源加载问题 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="screen命令保持程序运行 | quenkar - Atom Feed" href="https://quenkar.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -20,12 +20,9 @@
 </script>
 
 
-    <meta name="description" content="使用Maven创建的JavaWeb项目时可能会遇到静态资源加载问题，解决方案如下：
-在pom.xml文件中加入如下代码
-&lt;build&gt;
-    &lt;resources&gt;
-        &lt;resource&gt;..." />
-    <meta name="keywords" content="Maven" />
+    <meta name="description" content="screen命令是什么？
+screen是一个linux下可以在多个进程之间多路复用一个物理终端的全屏窗口管理器。screen中有会话的概念，用户可以在一个screen会话中创建多个screen窗口，在每一个screen窗口中就像操作一个真实..." />
+    <meta name="keywords" content="Linux" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -87,49 +84,37 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Maven静态资源加载问题
+              screen命令保持程序运行
             </h2>
             <div class="post-info">
               <span>
-                2020-10-30
+                2021-03-23
               </span>
               <span>
                 1 min read
               </span>
               
-                <a href="https://quenkar.github.io/tag/DmmZGGi7J/" class="post-tag">
-                  # Maven
+                <a href="https://quenkar.github.io/tag/A98Unt3cY/" class="post-tag">
+                  # Linux
                 </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://quenkar.github.io/post-images/maven-jing-tai-zi-yuan-jia-zai-wen-ti.jpg" alt="">
+              <img class="post-feature-image" src="https://quenkar.github.io/post-images/screen-ming-ling-bao-chi-cheng-xu-yun-xing.jpg" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p><strong>使用Maven创建的JavaWeb项目时可能会遇到静态资源加载问题，解决方案如下：</strong></p>
-<p>在<code>pom.xml</code>文件中加入如下代码</p>
-<pre><code class="language-xml">&lt;build&gt;
-    &lt;resources&gt;
-        &lt;resource&gt;
-            &lt;directory&gt;src/main/java&lt;/directory&gt;
-            &lt;includes&gt;
-                &lt;include&gt;**/*.properties&lt;/include&gt;
-                &lt;include&gt;**/*.xml&lt;/include&gt;
-            &lt;/includes&gt;
-            &lt;filtering&gt;false&lt;/filtering&gt;
-        &lt;/resource&gt;
-        &lt;resource&gt;
-            &lt;directory&gt;src/main/resources&lt;/directory&gt;
-            &lt;includes&gt;
-                &lt;include&gt;**/*.properties&lt;/include&gt;
-                &lt;include&gt;**/*.xml&lt;/include&gt;
-            &lt;/includes&gt;
-            &lt;filtering&gt;false&lt;/filtering&gt;
-        &lt;/resource&gt;
-    &lt;/resources&gt;
-&lt;/build&gt;
-</code></pre>
+                <p>screen命令是什么？<br>
+screen是一个linux下可以在多个进程之间多路复用一个物理终端的全屏窗口管理器。screen中有会话的概念，用户可以在一个screen会话中创建多个screen窗口，在每一个screen窗口中就像操作一个真实的telnet/ssh连接窗口那样。即使会话中止亦然可以在后台运行。</p>
+<p>新建会话命令:<br>
+<code>screen -L</code> 或 <code>screen -S</code></p>
+<p>退出当前会话，有两种，一种是完全退出，使用<code>exit</code>.<br>
+另一种则是保存当前会话，并在后台运行。快捷键：<code>Ctrl +A +D</code><br>
+退出后，重新进入命令是：<code>screen -r</code></p>
+<p>查看所有screen:<br>
+<code>screen -ls</code></p>
+<p>删除screen:<br>
+<code>screen -S [screenName] -X quit</code></p>
 
               </div>
               <div class="toc-container">
@@ -142,9 +127,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://quenkar.github.io/post/mysql-tcl/">
+            <a href="https://quenkar.github.io/post/wei-shi-me-new-ke-yi-diao-yong-si-you-privategou-zao-han-shu-er-make_shared-bu-neng/">
               <h3 class="post-title">
-                MySQL-TCL
+                为什么类内new可以调用私有(private)构造函数而make_shared不能？
               </h3>
             </a>
           </div>

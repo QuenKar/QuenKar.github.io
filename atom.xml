@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://quenkar.github.io</id>
     <title>quenkar</title>
-    <updated>2021-03-05T07:21:43.841Z</updated>
+    <updated>2021-03-23T12:29:31.655Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://quenkar.github.io"/>
     <link rel="self" href="https://quenkar.github.io/atom.xml"/>
@@ -10,6 +10,25 @@
     <logo>https://quenkar.github.io/images/avatar.png</logo>
     <icon>https://quenkar.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, quenkar</rights>
+    <entry>
+        <title type="html"><![CDATA[screen命令保持程序运行]]></title>
+        <id>https://quenkar.github.io/post/screen-ming-ling-bao-chi-cheng-xu-yun-xing/</id>
+        <link href="https://quenkar.github.io/post/screen-ming-ling-bao-chi-cheng-xu-yun-xing/">
+        </link>
+        <updated>2021-03-23T12:25:57.000Z</updated>
+        <content type="html"><![CDATA[<p>screen命令是什么？<br>
+screen是一个linux下可以在多个进程之间多路复用一个物理终端的全屏窗口管理器。screen中有会话的概念，用户可以在一个screen会话中创建多个screen窗口，在每一个screen窗口中就像操作一个真实的telnet/ssh连接窗口那样。即使会话中止亦然可以在后台运行。</p>
+<p>新建会话命令:<br>
+<code>screen -L</code> 或 <code>screen -S</code></p>
+<p>退出当前会话，有两种，一种是完全退出，使用<code>exit</code>.<br>
+另一种则是保存当前会话，并在后台运行。快捷键：<code>Ctrl +A +D</code><br>
+退出后，重新进入命令是：<code>screen -r</code></p>
+<p>查看所有screen:<br>
+<code>screen -ls</code></p>
+<p>删除screen:<br>
+<code>screen -S [screenName] -X quit</code></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[为什么类内new可以调用私有(private)构造函数而make_shared不能？]]></title>
         <id>https://quenkar.github.io/post/wei-shi-me-new-ke-yi-diao-yong-si-you-privategou-zao-han-shu-er-make_shared-bu-neng/</id>
@@ -1391,196 +1410,6 @@ WHERE department_id &gt; 90 ;
 <p><code>Settings-&gt;Build,Execution,Deployment-&gt;Build Tools-&gt;Maven</code></p>
 <figure data-type="image" tabindex="3"><img src="https://quenkar.github.io/post-images/1602418626351.png" alt="" loading="lazy"></figure>
 <p>将前面配置过的setting.xml覆盖原来的，再自己选择一个仓库，或者使用默认C盘下的仓库</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[MySQL-常见函数]]></title>
-        <id>https://quenkar.github.io/post/mysql-chang-jian-han-shu/</id>
-        <link href="https://quenkar.github.io/post/mysql-chang-jian-han-shu/">
-        </link>
-        <updated>2020-10-08T10:50:50.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="字符函数">字符函数</h2>
-<h3 id="length"># length</h3>
-<p>SELECT LENGTH('张三');	#utf8汉字占三个字节</p>
-<p>-&gt;<code>6</code></p>
-<h3 id="concat"># concat</h3>
-<pre><code class="language-sql"> SELECT 
-  CONCAT(last_name, '_', first_name) 
- FROM
-  employees ;
- # lower,upper
- SELECT 
-  CONCAT(
-   LOWER(last_name),
-   '_',
-   UPPER(first_name)
-  ) 
- FROM
-  employees ;
-</code></pre>
-<h3 id="substrsubstring"># substr,substring</h3>
-<p># <strong>！！！important</strong>：<strong>sql索引下标从1开始</strong></p>
-<pre><code class="language-sql"> SELECT SUBSTR('李莫愁爱上了陆湛远',7) output;
- SELECT SUBSTR('李莫愁爱上了陆湛远',1,3) output;
-
- SELECT 
-  CONCAT(
-   UPPER(SUBSTR(last_name, 1, 1)),
-   '_',
-   LOWER(SUBSTR(last_name, 2))
-  ) AS output 
- FROM
-  employees 
- ORDER BY output ; 
-</code></pre>
-<h3 id="instr"># instr</h3>
-<p>返回字串第一次在主串的下不标，<strong>找不到返回0</strong></p>
-<pre><code class="language-sql"> SELECT 
-  INSTR(
-   '杨不悔爱上了殷刘侠',
-   '殷刘侠'
-  ) AS output ;
-</code></pre>
-<h3 id="trim"># trim</h3>
-<p><code>SELECT LENGTH(TRIM(' abc ')) AS output;</code>-&gt;<code>abc</code></p>
-<p><code>SELECT TRIM('a' FROM 'aaaaaaa张aaa翠aaa三aaaaaaa') output;</code>-&gt;<code>张aaa翠aaa三</code></p>
-<h3 id="lpad"># lpad</h3>
-<p>用指定的字符左填充<br>
-<code>SELECT LPAD('fdsfds',10,'*') output;</code></p>
-<h3 id="rpad"># rpad</h3>
-<p><code>SELECT RPAD('fdsfds',10,'&amp;') output;</code></p>
-<h3 id="replace"># replace</h3>
-<p><code>SELECT REPLACE('张无忌爱上了周芷若','周芷若','张敏') output;</code></p>
-<h2 id="数学函数">数学函数</h2>
-<h3 id="round"># round</h3>
-<p>四舍五入<br>
-<code>SELECT ROUND(1.48);</code>-&gt;2<br>
-<code>SELECT ROUND(-1.75);</code>-&gt;-2<br>
-<code>SELECT ROUND(1.895,2);</code> -&gt;1.90</p>
-<h3 id="rand">#  rand</h3>
-<p><code>select rand()*10;</code>-&gt;<code>返回[0,10)随机值</code></p>
-<h3 id="ceil"># ceil</h3>
-<p>向上取整<br>
-<code>SELECT CEIL(1.07);</code></p>
-<h3 id="floor"># floor</h3>
-<p>向下取整<br>
-<code>SELECT FLOOR(-2.02);</code></p>
-<h3 id="truncate"># truncate</h3>
-<p>截断<br>
-<code>SELECT TRUNCATE(1.654382194,2);</code></p>
-<h3 id="mod"># mod</h3>
-<p>取余 mod(a,b) == <strong>a-a/b*b;</strong><br>
-<code>SELECT MOD(10, - 3) ;</code></p>
-<h2 id="日期函数">日期函数</h2>
-<h3 id="now">#now</h3>
-<p><code>SELECT NOW() ;</code></p>
-<h3 id="curdate">#curdate</h3>
-<p><code>SELECT CURDATE() ;</code></p>
-<h3 id="curtime">#curtime</h3>
-<pre><code class="language-sql">SELECT 
-  CURTIME() ;
-
-
- SELECT 
-  YEAR(NOW()) ;
-
- SELECT 
-  MONTH(NOW()) ;
-
- SELECT 
-  DAY(NOW()) ;
-
- SELECT 
-  HOUR(NOW()) ;
- SELECT 
-  MINUTE(NOW()) ;
- SELECT 
-  SECOND(NOW()) ;
-</code></pre>
-<h3 id="str_to_date"># str_to_date</h3>
-<pre><code class="language-sql"> SELECT STR_TO_DATE('2010-10-3','%Y-%c-%d');
-
- SELECT 
-  * 
- FROM
-  employees 
- WHERE hiredate = '1992-4-3' ;
-</code></pre>
-<h3 id="date_format"># date_format</h3>
-<p><code>SELECT DATE_FORMAT(NOW(),'%Y-%m-%d:%H-%i-%s');</code></p>
-<h2 id="其他函数">其他函数</h2>
-<p>SELECT VERSION();</p>
-<p>SELECT DATABASE();</p>
-<p>SELECT USER();</p>
-<h3 id="if函数"># if函数</h3>
-<pre><code class="language-sql"> SELECT 
-  IF(10 &gt; 5, 'true', 'false') ;
-
- SELECT 
-  last_name,
-  commission_pct,
-  IF(
-   commission_pct IS NULL,
-   '没奖金',
-   '有奖'
-  ) output 
- FROM
-  employees ;
-</code></pre>
-<h3 id="case函数"># case函数</h3>
-<p>语法：<br>
-case: 判断的字段或者表达式<br>
-when 常量1 then 要显示的值或者语句<br>
-when 常量2 then 要显示的值或者语句<br>
-else 要显示的值或者语句<br>
-end</p>
-<pre><code class="language-sql"> SELECT salary,department_id,
- CASE department_id
- WHEN 30 THEN salary*1.1
- WHEN 40 THEN salary*1.2
- WHEN 50 THEN salary*1.3
- ELSE salary
- END AS 新工资
- FROM employees;
-</code></pre>
-<h4 id="2-类似于多重ifelse"># 2 类似于多重if……else</h4>
-<p>case<br>
-when 条件1 then 要显示的值或者语句<br>
-when 条件2 then 要显示的值或者语句<br>
-else 要显示的值或者语句<br>
-end</p>
-<pre><code class="language-sql"> SELECT 
-  salary,
-  CASE
-   WHEN salary &gt; 20000 
-   THEN 'A' 
-   WHEN salary &gt; 15000 
-   THEN 'B' 
-   WHEN salary &gt; 10000 
-   THEN 'C' 
-   ELSE 'D' 
-  END AS 工资级别 
- FROM
-  employees ;
-</code></pre>
-<h2 id="分组函数">分组函数</h2>
-<h3 id="sum"># sum</h3>
-<p>求和</p>
-<h3 id="max"># max</h3>
-<p>最大值</p>
-<h3 id="min"># min</h3>
-<p>最小值</p>
-<h3 id="avg"># avg</h3>
-<p>平均值</p>
-<h3 id="count"># count</h3>
-<p>计数</p>
-<p>特点：<br>
-1、以上五个分组函数都忽略null值，除了count(<em>)<br>
-2、sum和avg一般用于处理数值型<br>
-max、min、count可以处理任何数据类型<br>
-3、都可以搭配distinct使用，用于统计去重后的结果<br>
-4、count的参数可以支持：<br>
-字段、</em>、常量值（一般放1），<strong>建议使用 count(*)</strong></p>
 ]]></content>
     </entry>
 </feed>
